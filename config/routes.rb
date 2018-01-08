@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  post '/user_token' => 'user_token#create' 
   namespace :v1 do
-    post 'user_token' => 'user_token#create'
     post '/users' => 'users#create'
+
 
     get '/venues' => 'venues#index'
 
@@ -11,6 +12,12 @@ Rails.application.routes.draw do
     get '/seatgeek/venues' => 'sg_events#venues'
 
     get '/parse/venues' => 'parse_events#venues'
+
+    get "/spotify/authorize" => "spotify#authorize"
+    get "/callback" => "spotify#callback"
+    get "/spotify/tokens" => "spotify#get_tokens"
+    get "/spotify/profile" => "spotify#get_profile"
+    get "/spotify/search" => "spotify#run_search"
 
   end
 end

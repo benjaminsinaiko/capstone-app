@@ -11,4 +11,6 @@
 # venue = Venue.create({venue_name: "Riviera Theatre", venue_sg_id: 622, venue_lat: 41.96867, venue_lng: -87.65993})
 # venue = Venue.create({venue_name: "The Vic", venue_sg_id: 372, venue_lat: 41.93956, venue_lng: -87.65391})
 
-#
+# venue = Venue.create({venue_name: "1"})
+# venue = Venue.create({venue_name: "1"})
+# venue = Venue.create({venue_name: "1"})

@@ -31,11 +31,11 @@ var HomePage = {
             coords.longitude,
             coords.latitude
           );
-          let venuName = this.venues[i].venueName;
+          let venueName = this.venues[i].venueName;
           let description = this.venues[i].venueDescription;
           // console.log(description);
           var infowindow = new google.maps.InfoWindow({
-            title: venuName,
+            title: venueName,
             content: description
           });
           var marker = new google.maps.Marker({

@@ -1,6 +1,5 @@
 class V1::SgEventsController < ApplicationController
   def events # Events By Venue
-    # params = 999
     response = Unirest.get("https://api.seatgeek.com/2/events?client_id=#{ENV['SG_CLIENT_ID']}&per_page=100&venue.id=#{params}")
     venue_events = response.body
     render json: venue_events.as_json
@@ -8,7 +7,7 @@ class V1::SgEventsController < ApplicationController
 
   def show
     event_id = params['id']
-    response = Unirest.get("https://api.seatgeek.com/2/events?client_id=#{ENV['SG_CLIENT_ID']}&per_page=100&venue.id=#{event_id}")
+    response = Unirest.get("https://api.seatgeek.com/2/events?client_id=#{ENV['SG_CLIENT_ID']}&per_page=100&venue.id=#{event_id}&type=concert")
     venue_events = response.body
     render json: venue_events.as_json
   end
