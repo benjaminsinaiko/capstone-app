@@ -20,5 +20,6 @@ Rails.application.routes.draw do
     get "/spotify/profile" => "spotify#get_profile"
     get "/spotify/search" => "spotify#run_search"
 
+    get '/setlists/:id' => 'setlists#artists'
   end
 end

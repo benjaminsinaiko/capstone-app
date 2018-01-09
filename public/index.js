@@ -289,7 +289,8 @@ var ArtistInfoPage = {
   data: function() {
     return {
       message: "Artist Info Page",
-      artistInfo: []
+      artistInfo: [],
+      artistSetlists: []
     };
   },
   created: {},
