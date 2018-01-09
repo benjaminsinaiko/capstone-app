@@ -184,7 +184,7 @@
       <h3>{{ message }}</h3>
       <div class="row">
         <div class="col-sm-6">
-          <p><strong>Artist Name</strong></p><br>
+          <p><strong>{{artistName}}</strong></p><br>
           <img src="https://www.w3schools.com/bootstrap/bandmember.jpg" class="img-circle person" alt="Random Name">
         </div>
         <div class="col-sm-6">
@@ -198,9 +198,11 @@
       <div class="container">
         <h3 class="text-center">Past Dates</h3>
         <ul class="list-group">
-          <li class="list-group-item">September Sold Out!</li>
-          <li class="list-group-item">October Sold Out!</li> 
-          <li class="list-group-item">November 3</li> 
+          <li class="list-group-item" v-for="setlist in setlists">
+            {{setlist.eventDate}} | {{setlist.venue.name}} - {{setlist.venue.city.name}}, {{setlist.venue.city.state}}  
+          </li>
+<!--           <li class="list-group-item">October Sold Out!</li> 
+          <li class="list-group-item">November 3</li>  -->
         </ul>
       </div>
     </div>

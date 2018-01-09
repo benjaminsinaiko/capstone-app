@@ -46,6 +46,7 @@ h4 {
 .list-group-item:hover {
   border-color: orange;
   transform: scale(1.05);
+  color: orange;
 }
 .carousel-inner img {
   -webkit-filter: grayscale(90%);

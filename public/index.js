@@ -290,11 +290,18 @@ var ArtistInfoPage = {
     return {
       message: "Artist Info Page",
       artistInfo: [],
-      artistSetlists: []
+      setlists: [],
+      artistName: ""
     };
   },
-  created: {},
-  mounted: {},
+  mounted: function() {
+    axios.get("/v1/setlists/bon-iver").then(response => {
+      this.setlists = response.data.setlist;
+      this.artistName = this.setlists[0].artist.name;
+      console.log("setlists: ", this.setlists);
+      console.log("Artist: ", this.artistName);
+    }).this;
+  },
   methods: {},
   computed: {}
 };
