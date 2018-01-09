@@ -89,7 +89,7 @@ var HomePage = {
           }
         ]
       });
-      console.log("venues2: ", this.venues);
+      console.log("venues: ", this.venues);
 
       // Google Map Marker Color
       function pinSymbol(color) {
@@ -130,10 +130,9 @@ var HomePage = {
     });
   },
   methods: {
-    isValidVenue: inputVenue => {
-      return inputVenue.venue_name
-        .toLowerCase()
-        .includes(this.venueFilter.toLowerCase());
+    isValidVenue: function(inputVenue) {
+      return inputVenue.venue_name.includes(this.venueFilter);
+      // .toLowerCase().includes(this.venueFilter.toLowerCase());
     }
   },
   computed: {}
@@ -285,6 +284,20 @@ var VenuesEventPage = {
   }
 };
 
+var ArtistInfoPage = {
+  template: "#artist-info-page",
+  data: function() {
+    return {
+      message: "Artist Info Page",
+      artistInfo: []
+    };
+  },
+  created: {},
+  mounted: {},
+  methods: {},
+  computed: {}
+};
+
 // Signup Page
 var SignupPage = {
   template: "#signup-page",
@@ -357,8 +370,7 @@ var SpotifyAuthPage = {
   template: "#spotify-auth-page",
   data: function() {
     return {
-      message: "Welcome to Vue.js!",
-      code: ""
+      message: "Connect to Spotify!"
     };
   },
   mounted: function() {},
@@ -378,13 +390,33 @@ var SpotifyAuthPage = {
   computed: {}
 };
 
+var SpotifyCallbackPage = {
+  template: "#spotify-auth-page",
+  data: function() {
+    return {
+      message: "Get Spotify Tokens",
+      code: ""
+    };
+  },
+  mounted: function() {
+    axios.get("/v1/callback").then(function(response) {
+      let code = response.code;
+      console.log(code);
+    });
+  },
+  methods: {},
+  computed: {}
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/venues/:id", component: VenuesEventPage },
+    { path: "/artists/:id", component: ArtistInfoPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
-    { path: "/spotify-auth", component: SpotifyAuthPage }
+    { path: "/spotify-auth", component: SpotifyAuthPage },
+    { path: "/spotify-callback", component: SpotifyCallbackPage }
   ]
 });
 

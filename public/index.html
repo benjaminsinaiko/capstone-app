@@ -82,6 +82,7 @@
   <div class="container-small">
     <div class="input-group col-md-3">
       <input type="text" class="form-control" v-model="venueFilter" placeholder="Search for venue" aria-label="Search for venue">
+      <!-- <p>{{venueFilter}}</p> -->
       <span class="input-group-btn">
         <button class="btn btn-secondary" type="button">Go!</button>
       </span>
@@ -94,13 +95,12 @@
 
       <div class="row text-center">
         <!-- Sample Venue Card -->
-        <div class="col-sm-4" v-for="venue in venues">
-          <div class="thumbnail"  v-if="isValidVenue" v-bind:key="venue.id">
+        <div class="col-sm-4" v-for="venue in venues" v-if="venue.venue_name.includes(venueFilter)">
+          <div class="thumbnail">
             <img src="http://via.placeholder.com/300x250" alt="">
             <!-- <img v-bind:src="venue.avatar" alt=""> -->
             <p><strong>{{ venue.venue_name }}</strong></p>
             <p>{{ venue.venue_address }}</p>
-            <!-- <button class="btn">See Shows</button> -->
             <a v-bind:href="'/#/venues/' + venue.venue_sg_id" class="btn btn-primary">See Shows</a>
           </div>
         </div>
@@ -176,6 +176,43 @@
 </template>
 
 
+<!-- Artist Info Page -->
+<template id="artist-info-page">
+  <div>
+    <!-- Aritst Name/Image -->
+    <div class="container text-center">
+      <h3>{{ message }}</h3>
+      <div class="row">
+        <div class="col-sm-6">
+          <p><strong>Artist Name</strong></p><br>
+          <img src="https://www.w3schools.com/bootstrap/bandmember.jpg" class="img-circle person" alt="Random Name">
+        </div>
+        <div class="col-sm-6">
+          <p><strong>Top Tracks (Spotify)</strong></p><br>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spotify/Setlist info -->
+    <div class="bg-1">
+      <div class="container">
+        <h3 class="text-center">Past Dates</h3>
+        <ul class="list-group">
+          <li class="list-group-item">September Sold Out!</li>
+          <li class="list-group-item">October Sold Out!</li> 
+          <li class="list-group-item">November 3</li> 
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+</template>
+
+
+
+
+
 <!-- Signup Page -->
 <template id="signup-page">
   <div class="container">
@@ -225,10 +262,23 @@
   </div>
 </template>
 
+
 <!-- Spotify Auth -->
 <template id="spotify-auth-page">
   <div>
-    <h1>{{ message }}</h1>
-    <button class="btn btn-primary" v-on:click="spotifyConnect()">Spotify Auth</button>
+    <div class="container">
+      <h1>{{ message }}</h1>
+      <button class="btn btn-primary" v-on:click="spotifyConnect()">Spotify Auth</button>
+    </div>
+  </div>
+</template>
+
+<!-- Spotify Callback -->
+<template id="spotify-callback-page">
+  <div>
+    <div class="container">
+      <h1>{{ message }}</h1>
+      <button class="btn btn-primary" v-on:click="spotifyConnect()">Spotify Get Tokens</button>
+    </div>
   </div>
 </template>

@@ -43,8 +43,9 @@ h4 {
   height: 80%;
   opacity: 0.7;
 }
-.person:hover {
-  border-color: #f1f1f1;
+.list-group-item:hover {
+  border-color: orange;
+  transform: scale(1.05);
 }
 .carousel-inner img {
   -webkit-filter: grayscale(90%);
