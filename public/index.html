@@ -96,7 +96,8 @@
         <!-- Sample Venue Card -->
         <div class="col-sm-4" v-for="venue in venues">
           <div class="thumbnail"  v-if="isValidVenue" v-bind:key="venue.id">
-            <img src="http://via.placeholder.com/300x250" alt="Paris">
+            <img src="http://via.placeholder.com/300x250" alt="">
+            <!-- <img v-bind:src="venue.avatar" alt=""> -->
             <p><strong>{{ venue.venue_name }}</strong></p>
             <p>{{ venue.venue_address }}</p>
             <!-- <button class="btn">See Shows</button> -->

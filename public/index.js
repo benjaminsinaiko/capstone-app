@@ -13,7 +13,7 @@ var HomePage = {
   mounted: function() {
     axios.get("/v1/venues").then(response => {
       this.venues = response.data;
-      console.log("venues1: ", this.venues);
+      // console.log("venues1: ", this.venues);
 
       /////// MAP ///////
       var map = new google.maps.Map(document.getElementById("map"), {
