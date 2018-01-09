@@ -295,7 +295,7 @@ var ArtistInfoPage = {
     };
   },
   mounted: function() {
-    axios.get("/v1/setlists/bon-iver").then(response => {
+    axios.get("/v1/setlists/" + this.$route.params.id).then(response => {
       this.setlists = response.data.setlist;
       this.artistName = this.setlists[0].artist.name;
       console.log("setlists: ", this.setlists);

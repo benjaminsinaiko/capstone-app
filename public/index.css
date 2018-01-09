@@ -17,6 +17,9 @@ body {
   font-size: 20px;
   font-weight: bold;
 }
+.artist-links {
+  text-decoration: none;
+}
 
 /* From W3School Theme */
 body {

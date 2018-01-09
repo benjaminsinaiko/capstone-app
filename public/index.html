@@ -69,6 +69,7 @@
 </body>
 </html>
 
+<!-- ............................................................... -->
 <!-- Home Page -->
 <template id="home-page">
 <div>
@@ -115,6 +116,7 @@
 
 </template>
 
+<!-- ............................................................... -->
 <!-- Venues Event Page -->
 <template id="venues-event-page">
   <div>
@@ -152,20 +154,23 @@
       <div class="container">
         <div class="row">
           <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]" v-for="event in events">
-            <ul class="event-list">
-              <li>
-                <time>
-                  <span class="day">{{dateDay}}</span>
-                  <span class="month">{{dateMonth}}</span>
-                </time>
-                <!-- <img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" /> -->
-                <div class="info">
-                  <br>
-                  <h1 class="title">{{event.title}}</h1>
-                  <p class="desc">{{dateTime}}</p>
-                </div>
-              </li>
-            </ul>
+            <!-- <a v-bind:href="'/#/venues/' + venue.venue_sg_id" -->
+            <a v-bind:href="'/#/artists/' + event.performers[0].slug" class="artist-links">
+              <ul class="event-list">
+                <li>
+                  <time>
+                    <span class="day">{{dateDay}}</span>
+                    <span class="month">{{dateMonth}}</span>
+                  </time>
+                  <!-- <img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" /> -->
+                  <div class="info">
+                    <br>
+                    <h1 class="title">{{event.title}}</h1>
+                    <p class="desc">{{dateTime}}</p>
+                  </div>
+                </li>
+              </ul>
+            </a>
           </div>
         </div>
       </div>
@@ -175,7 +180,7 @@
   </div>
 </template>
 
-
+<!-- ............................................................... -->
 <!-- Artist Info Page -->
 <template id="artist-info-page">
   <div>
@@ -212,9 +217,7 @@
 </template>
 
 
-
-
-
+<!-- ............................................................... -->
 <!-- Signup Page -->
 <template id="signup-page">
   <div class="container">
@@ -245,6 +248,7 @@
   </div>
 </template>
 
+<!-- ............................................................... -->
 <!-- Login Page -->
 <template id="login-page">
   <div class="container">
@@ -264,7 +268,7 @@
   </div>
 </template>
 
-
+<!-- ............................................................... -->
 <!-- Spotify Auth -->
 <template id="spotify-auth-page">
   <div>
@@ -275,6 +279,7 @@
   </div>
 </template>
 
+<!-- ............................................................... -->
 <!-- Spotify Callback -->
 <template id="spotify-callback-page">
   <div>
