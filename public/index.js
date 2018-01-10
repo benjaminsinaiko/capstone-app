@@ -291,18 +291,31 @@ var ArtistInfoPage = {
       message: "Artist Info Page",
       artistInfo: [],
       setlists: [],
-      artistName: ""
+      artistName: "",
+      currentSetlist: {},
+      currentURL: []
     };
   },
   mounted: function() {
     axios.get("/v1/setlists/" + this.$route.params.id).then(response => {
       this.setlists = response.data.setlist;
       this.artistName = this.setlists[0].artist.name;
-      console.log("setlists: ", this.setlists);
-      console.log("Artist: ", this.artistName);
+      // console.log("setlists: ", this.setlists);
+      // console.log("Artist: ", this.artistName);
     }).this;
   },
-  methods: {},
+  methods: {
+    setCurrentSetlist: function(inputSetlist) {
+      this.currentSetlist = inputSetlist;
+      // console.log("current: ", this.currentSetlist);
+      let setlistId = this.currentSetlist.id;
+      // console.log("id: ", setlistId);
+      this.currentURL =
+        "https://www.setlist.fm/widgets/setlist-image-v1?size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
+        setlistId;
+      // console.log("url:", this.currentURL);
+    }
+  },
   computed: {}
 };
 
