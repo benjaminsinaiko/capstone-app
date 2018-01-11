@@ -314,32 +314,48 @@ var ArtistInfoPage = {
   data: function() {
     return {
       message: "Artist Info Page",
-      artistInfo: [],
       setlists: [],
       artistName: "",
       currentSetlist: {},
       currentURL: [],
-      spotifyArtist: []
+      artistInfo: [],
+      artistImage: {},
+      artistPlaylist: ""
     };
   },
   mounted: function() {
+    // Get setlist
     axios.get("/v1/setlists/" + this.$route.params.id).then(response => {
       this.setlists = response.data.setlist;
       this.artistName = this.setlists[0].artist.name;
       // console.log("setlists: ", this.setlists);
       // console.log("Artist: ", this.artistName);
     });
+
+    // Get Spotify token from localStorage
     let token = localStorage.getItem("spotifyToken");
     console.log("spotifyToken is:", token);
     let searchUrl =
-      "http://localhost:3000/v1/spotify/search?artist=coin&access_token=" +
+      "/v1/spotify/search?artist=" +
+      this.$route.params.id +
+      "&access_token=" +
       token;
-    // axios.get(searchUrl).then(response => {
-    //   this.spotifyArtist = response.data;
-    // });
-    // console.log(searchUrl);
-    // console.log(this.spotifyArtist);
+    // console.log("searchURL: ", searchUrl);
+
+    // Search Artist on Spotify
+    axios.get(searchUrl).then(response => {
+      let searchResults = response.data;
+      // Artist Info
+      this.artistInfo = response.data[0];
+      this.artistImage = this.artistInfo.images[0].url;
+      console.log("Artist Info: ", this.artistInfo);
+      let artistURI = this.artistInfo.uri;
+      console.log("Artist URI: ", artistURI);
+      this.artistPlaylist = "https://open.spotify.com/embed?uri=" + artistURI;
+      console.log("Artist playlist: ", this.artistPlaylist);
+    });
   },
+
   methods: {
     setCurrentSetlist: function(inputSetlist) {
       this.currentSetlist = inputSetlist;
@@ -352,6 +368,21 @@ var ArtistInfoPage = {
       // console.log("url:", this.currentURL);
     }
   },
+  computed: {}
+};
+
+// ARTIST SEARCH PAGE................................................
+var ArtistSearchPage = {
+  template: "#artist-search-page",
+  data: function() {
+    return {
+      message: "Artist Search Page",
+      artistInfo: [],
+      artistName: ""
+    };
+  },
+  mounted: function() {},
+  methods: {},
   computed: {}
 };
 
@@ -454,7 +485,8 @@ var SpotifyCallbackPage = {
   data: function() {
     return {
       message: "Get Spotify Tokens",
-      profileData: {}
+      profileData: {},
+      displayName: ""
     };
   },
   mounted: function() {
@@ -463,7 +495,9 @@ var SpotifyCallbackPage = {
     let url = "http://localhost:3000/v1/spotify/profile?access_token=" + token;
     axios.get(url).then(function(response) {
       this.profileData = response.data;
+      this.displayName = response.data.display_name;
       console.log("profileData: ", this.profileData);
+      console.log("displayName: ", this.displayName);
       // console.log(response.data);
     });
   },
@@ -488,6 +522,7 @@ var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/venues/:id", component: VenuesEventPage },
+    { path: "/artists", component: ArtistSearchPage },
     { path: "/artists/:id", component: ArtistInfoPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },

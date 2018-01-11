@@ -44,22 +44,31 @@ class V1::SpotifyController < ApplicationController
         "Authorization" => "Bearer #{params[:access_token]}"
       }
     )
+    # response = Unirest.get(
+    #   "https://api.spotify.com/v1/search?q=the-national&type=artist",
+    #   headers: {
+    #     "Authorization" => "Bearer BQDtTviM6Gc5K6qqNRC2uYXwU5Gj1-9A1F8N6LNkqCGEEocsSfgYYM9nFNtqUvtWL0J718wLMbwX5QaST_liGF8N_rxu1XBILhD_9DMgS1oJmBDDkbwSCM_USWTLkEAeqhj_cv-RPOpVtrVL"
+    #   }
+    # )
+
     # save artist id
     artists = response.body
     artist = artists["artists"]["items"].first
-    artist_id = artist["id"]
-    # render json: artist
-    # search top tracks by artist_id
-    response = Unirest.get(
-      "https://api.spotify.com/v1/artists/#{artist_id}/top-tracks?country=US",
-      headers: {
-        "Authorization" => "Bearer #{params[:access_token]}"
-      }
-    )
-    artist_tracks = response.body["tracks"]
-    # Get an array of top 5 tracks
-    top_tracks = artist_tracks.map { |track| track.values_at("name", "preview_url")}.first(5).to_h
-    render json: top_tracks
+    # render json: artist.as_json
+    # artist_id = artist["id"]
+
+    # # search top tracks by artist_id
+    # response = Unirest.get(
+    #   "https://api.spotify.com/v1/artists/#{artist_id}/top-tracks?country=US",
+    #   headers: {
+    #     "Authorization" => "Bearer #{params[:access_token]}"
+    #   }
+    # )
+    # artist_tracks = response.body["tracks"].first(5)
+    # # Get an array of top 5 tracks
+    # top_tracks = artist_tracks.map { |track| track.values_at("name", "preview_url")}.first(5)
+    # removed .to_h
+    render json: [artist]
   end
 
 end

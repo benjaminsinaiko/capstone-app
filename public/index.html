@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/#/">HOME</a></li>
-            <li><a href="#band">BAND</a></li>
+            <li><a href="/#/artists/the-national">ARTISTS</a></li>
             <li><a href="/#/spotify-auth">SPOTIFY</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
@@ -182,19 +182,33 @@
 </template>
 
 <!-- ............................................................... -->
+<!-- Artist Search Page -->
+<template id="artist-search-page">
+  <div>
+    <div class="container">
+      <h1> {{ message }}</h1>
+      <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
+    </div>
+  </div>
+</template>
+
+<!-- ............................................................... -->
 <!-- Artist Info Page -->
 <template id="artist-info-page">
   <div>
     <!-- Aritst Name/Image -->
     <div class="container text-center">
-      <h3>{{ message }}</h3>
       <div class="row">
         <div class="col-sm-6">
-          <p><strong>{{artistName}}</strong></p><br>
-          <img src="https://www.w3schools.com/bootstrap/bandmember.jpg" class="img-circle person" alt="Random Name">
+          <h2><strong>{{ artistName }}</strong></h2>
+          <br>
+          <img :src="artistImage" class="img-circle person" alt="Artist Name">
         </div>
         <div class="col-sm-6">
-          <p><strong>Top Tracks (Spotify)</strong></p><br>
+<!--           <p><strong>Top Tracks</strong></p><br> -->
+          <!-- Spotify Player -->
+          <br>
+          <iframe :src="artistPlaylist" width="450" height="400" frameborder="0" allowtransparency="true"></iframe>
         </div>
       </div>
     </div>
@@ -291,8 +305,7 @@
 <template id="spotify-callback-page">
   <div>
     <div class="container">
-      <h1>Hello</h1>
-      <h2>{{profileData.id}}</h2>
+      <h1>Hello {{ displayName }}</h1>
     </div>
   </div>
 </template>
