@@ -44,12 +44,6 @@ class V1::SpotifyController < ApplicationController
         "Authorization" => "Bearer #{params[:access_token]}"
       }
     )
-    # response = Unirest.get(
-    #   "https://api.spotify.com/v1/search?q=the-national&type=artist",
-    #   headers: {
-    #     "Authorization" => "Bearer BQDtTviM6Gc5K6qqNRC2uYXwU5Gj1-9A1F8N6LNkqCGEEocsSfgYYM9nFNtqUvtWL0J718wLMbwX5QaST_liGF8N_rxu1XBILhD_9DMgS1oJmBDDkbwSCM_USWTLkEAeqhj_cv-RPOpVtrVL"
-    #   }
-    # )
 
     # save artist id
     artists = response.body
