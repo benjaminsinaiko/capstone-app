@@ -94,7 +94,7 @@
 
       <div class="row text-center">
         <!-- Sample Venue Card -->
-        <div class="col-sm-4" v-for="venue in venues" v-if="venue.venue_name.includes(venueFilter)">
+        <div class="col-sm-4" v-for="venue in venues" v-if="isValidVenue(venue)">
           <div class="thumbnail">
             <img src="http://via.placeholder.com/300x250" alt="">
             <!-- <img v-bind:src="venue.avatar" alt=""> -->
@@ -153,18 +153,21 @@
         <div class="row">
           <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]" v-for="event in events">
             <!-- <a v-bind:href="'/#/venues/' + venue.venue_sg_id" -->
+
+            <!-- Link to Artis Info Page by Artist -->
             <a v-bind:href="'/#/artists/' + event.performers[0].slug" class="artist-links">
+              <!-- Event List Template -->
               <ul class="event-list">
                 <li>
                   <time>
-                    <span class="day">{{dateDay}}</span>
-                    <span class="month">{{dateMonth}}</span>
+                    <span class="day" count>{{dateDay(event)}}</span>
+                    <span class="month">{{dateMonth(event)}}</span>
                   </time>
                   <!-- <img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" /> -->
                   <div class="info">
                     <br>
                     <h1 class="title">{{event.title}}</h1>
-                    <p class="desc">{{dateTime}}</p>
+                    <p class="desc">{{dateTime(event)}}</p>
                   </div>
                 </li>
               </ul>
@@ -278,7 +281,7 @@
   <div>
     <div class="container">
       <h1>{{ message }}</h1>
-      <button class="btn btn-primary" v-on:click="spotifyConnect()">Spotify Auth</button>
+      <button class="btn btn-primary btn-lg" v-on:click="spotifyConnect()">Spotify Auth</button>
     </div>
   </div>
 </template>
@@ -288,8 +291,8 @@
 <template id="spotify-callback-page">
   <div>
     <div class="container">
-      <h1>{{ message }}</h1>
-      <button class="btn btn-primary" v-on:click="spotifyConnect()">Spotify Get Tokens</button>
+      <h1>Hello</h1>
+      <h2>{{profileData.id}}</h2>
     </div>
   </div>
 </template>

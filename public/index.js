@@ -1,5 +1,6 @@
 /* global Vue, VueRouter, axios, google, moment */
 
+// HOME PAGE....................................................
 var HomePage = {
   template: "#home-page",
   data: function() {
@@ -9,7 +10,33 @@ var HomePage = {
       venueFilter: ""
     };
   },
-  created: function() {},
+  created: function() {
+    // console.log("hello home page");
+    // console.log(this.$route.params);
+
+    // Spotify Tokens
+    var spotifyCode = window.location.href.split("?")[1]
+      ? window.location.href.split("?")[1].split("code=")[1]
+      : null;
+    if (spotifyCode) {
+      spotifyCode = spotifyCode.split("#")[0];
+      console.log("spotifyCode", spotifyCode);
+      let url = "http://localhost:3000/v1/spotify/tokens?code=" + spotifyCode;
+      console.log("url: ", url);
+
+      axios.get(url).then(response => {
+        let token = response.data;
+        let accessToken = response.data.access_token;
+        let refreshToken = response.data.refresh_token;
+        localStorage.setItem("spotifyToken", response.data.access_token);
+        localStorage.setItem("spotifyRefresh", response.data.refresh_token);
+        console.log("return token: ", token);
+        console.log("access token: ", accessToken);
+        console.log("refresh token: ", refreshToken);
+        router.push("/spotify-callback");
+      });
+    }
+  },
   mounted: function() {
     axios.get("/v1/venues").then(response => {
       this.venues = response.data;
@@ -131,14 +158,16 @@ var HomePage = {
   },
   methods: {
     isValidVenue: function(inputVenue) {
-      return inputVenue.venue_name.includes(this.venueFilter);
-      // .toLowerCase().includes(this.venueFilter.toLowerCase());
+      // return inputVenue.venue_name.includes(this.venueFilter);
+      return inputVenue.venue_name
+        .toLowerCase()
+        .includes(this.venueFilter.toLowerCase());
     }
   },
   computed: {}
 };
 
-// VENUES EVENT PAGE
+// VENUES EVENT PAGE.....................................................
 var VenuesEventPage = {
   template: "#venues-event-page",
   data: function() {
@@ -235,7 +264,6 @@ var VenuesEventPage = {
             }
           ]
         });
-
         function pinSymbol(color) {
           return {
             path:
@@ -255,35 +283,32 @@ var VenuesEventPage = {
       }.bind(this)
     );
   },
-  fitlers: {
-    // dateDay: function(datetime_local) {
-    //   return moment(datetime_local).format("D");
-    // }
-  },
-  methods: {},
-  computed: {
-    eventsCount: function() {
-      return this.events.length;
-    },
-    // Datetime Example 2018-03-24T03:30:00
-    dateDay: function() {
-      let datetime = this.events[0].datetime_local;
+  fitlers: {},
+  methods: {
+    dateDay: function(event) {
+      let datetime = event.datetime_local;
       let day = moment(datetime).format("D");
       return day;
     },
-    dateMonth: function() {
-      let datetime = this.events[0].datetime_local;
+    dateMonth: function(event) {
+      let datetime = event.datetime_local;
       let month = moment(datetime).format("MMM");
       return month;
     },
-    dateTime: function() {
-      let datetime = this.events[0].datetime_local;
+    dateTime: function(event) {
+      let datetime = event.datetime_local;
       let time = moment(datetime).format("LT");
       return time;
+    }
+  },
+  computed: {
+    eventsCount: function() {
+      return this.events.length;
     }
   }
 };
 
+// ARTIST INFO PAGE................................................
 var ArtistInfoPage = {
   template: "#artist-info-page",
   data: function() {
@@ -293,7 +318,8 @@ var ArtistInfoPage = {
       setlists: [],
       artistName: "",
       currentSetlist: {},
-      currentURL: []
+      currentURL: [],
+      spotifyArtist: []
     };
   },
   mounted: function() {
@@ -302,7 +328,17 @@ var ArtistInfoPage = {
       this.artistName = this.setlists[0].artist.name;
       // console.log("setlists: ", this.setlists);
       // console.log("Artist: ", this.artistName);
-    }).this;
+    });
+    let token = localStorage.getItem("spotifyToken");
+    console.log("spotifyToken is:", token);
+    let searchUrl =
+      "http://localhost:3000/v1/spotify/search?artist=coin&access_token=" +
+      token;
+    // axios.get(searchUrl).then(response => {
+    //   this.spotifyArtist = response.data;
+    // });
+    // console.log(searchUrl);
+    // console.log(this.spotifyArtist);
   },
   methods: {
     setCurrentSetlist: function(inputSetlist) {
@@ -311,7 +347,7 @@ var ArtistInfoPage = {
       let setlistId = this.currentSetlist.id;
       // console.log("id: ", setlistId);
       this.currentURL =
-        "https://www.setlist.fm/widgets/setlist-image-v1?size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
+        "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
         setlistId;
       // console.log("url:", this.currentURL);
     }
@@ -319,7 +355,7 @@ var ArtistInfoPage = {
   computed: {}
 };
 
-// Signup Page
+// SIGNUP PAGE..................................................................
 var SignupPage = {
   template: "#signup-page",
   data: function() {
@@ -353,7 +389,7 @@ var SignupPage = {
   }
 };
 
-// Login Page
+// LOGIN PAGE..........................................................
 var LoginPage = {
   template: "#login-page",
   data: function() {
@@ -387,6 +423,7 @@ var LoginPage = {
   }
 };
 
+// SPOTIFY AUTH PAGE......................................................
 var SpotifyAuthPage = {
   template: "#spotify-auth-page",
   data: function() {
@@ -400,11 +437,12 @@ var SpotifyAuthPage = {
       axios.get("v1/spotify/authorize").then(function(response) {
         let authUrl = response.data;
         console.log(authUrl);
-        window.open(
-          authUrl.url,
-          "popUpWindow",
-          "height=650,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes"
-        );
+        // window.open(
+        //   authUrl.url,
+        //   "popUpWindow",
+        //   "height=650,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes"
+        // );
+        window.location = authUrl.url;
       });
     }
   },
@@ -412,23 +450,40 @@ var SpotifyAuthPage = {
 };
 
 var SpotifyCallbackPage = {
-  template: "#spotify-auth-page",
+  template: "#spotify-callback-page",
   data: function() {
     return {
       message: "Get Spotify Tokens",
-      code: ""
+      profileData: {}
     };
   },
   mounted: function() {
-    axios.get("/v1/callback").then(function(response) {
-      let code = response.code;
-      console.log(code);
+    let token = localStorage.getItem("spotifyToken");
+    console.log("spotifyToken is:", token);
+    let url = "http://localhost:3000/v1/spotify/profile?access_token=" + token;
+    axios.get(url).then(function(response) {
+      this.profileData = response.data;
+      console.log("profileData: ", this.profileData);
+      // console.log(response.data);
     });
   },
+  // mounted: {
+  //   getProfile: function() {
+  //     let token = localStorage.getItem("spotifyToken");
+  //     console.log("spotifyToken is:", token);
+  //     let url =
+  //       "http://localhost:3000/v1/spotify/profile?access_token=" + token;
+  //     axios.get(url).then(function(response) {
+  //       let profileData = response.code;
+  //       console.log(profileData);
+  //     });
+  //   }
+  // },
   methods: {},
   computed: {}
 };
 
+// ROUTER...............................................
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
@@ -441,10 +496,12 @@ var router = new VueRouter({
   ]
 });
 
+// VUE..................................................
 var app = new Vue({
   el: "#app",
   router: router,
   created: function() {
+    var spotifyToken = localStorage.getItem("spotifyToken");
     var jwt = localStorage.getItem("jwt");
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
