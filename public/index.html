@@ -48,6 +48,8 @@
               <ul class="dropdown-menu">
                 <li><a href="/#/signup">Signup</a></li>
                 <li><a href="/#/login">Login</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a href="/#/spotify-auth">Spotify</a></li>
               </ul>
             </li>
           </ul>
@@ -79,25 +81,23 @@
   </div>
 
   <div class="container-small">
-    <div class="input-group col-md-3">
-      <input type="text" class="form-control" v-model="venueFilter" placeholder="Search for venue" aria-label="Search for venue">
-      <!-- <p>{{venueFilter}}</p> -->
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Go!</button>
-      </span>
-    </div>
+    <h3 class="text-center">Venues around Town</h3>
   </div>
+
+  <!-- Google Map -->
+  <div id="map"></div>
+
   <!-- Venue Container -->
   <div class="bg-1">
     <div class="container">
-      <h3 class="text-center">Venues Around Town</h3>
+      <h3 class="text-center"><input type="text" class="form-control" v-model="venueFilter" placeholder="Search for venue" aria-label="Search for venue"></h3>
 
       <div class="row text-center">
         <!-- Sample Venue Card -->
         <div class="col-sm-4" v-for="venue in venues" v-if="isValidVenue(venue)">
           <div class="thumbnail">
-            <img src="http://via.placeholder.com/300x250" alt="">
-            <!-- <img v-bind:src="venue.avatar" alt=""> -->
+            <!-- <img src="http://via.placeholder.com/300x250" alt=""> -->
+            <img v-bind:src="venue.avatar" alt="venue image">
             <p><strong>{{ venue.venue_name }}</strong></p>
             <p>{{ venue.venue_address }}</p>
             <a v-bind:href="'/#/venues/' + venue.venue_sg_id" class="btn btn-primary">See Shows</a>
@@ -107,8 +107,7 @@
     </div>
   </div>
 
-<!-- Google Map -->
-  <div id="map"></div>
+
 
 </div>
 
@@ -152,31 +151,33 @@
       <div class="container">
         <div class="row">
           <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]" v-for="event in events">
-            <!-- <a v-bind:href="'/#/venues/' + venue.venue_sg_id" -->
-
-            <!-- Link to Artis Info Page by Artist -->
-            <a v-bind:href="'/#/artists/' + event.performers[0].slug" class="artist-links">
-              <!-- Event List Template -->
-              <ul class="event-list">
-                <li>
-                  <time>
-                    <span class="day" count>{{dateDay(event)}}</span>
-                    <span class="month">{{dateMonth(event)}}</span>
-                  </time>
-                  <!-- <img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" /> -->
-                  <div class="info">
-                    <br>
-                    <h1 class="title">{{event.title}}</h1>
-                    <p class="desc">{{dateTime(event)}}</p>
-                  </div>
-                </li>
-              </ul>
-            </a>
+          <!-- Event List Template -->
+            <ul class="event-list">
+              <li>
+                <time>
+                  <span class="day" count>{{dateDay(event)}}</span>
+                  <span class="month">{{dateMonth(event)}}</span>
+                </time>
+                <div class="info">
+                  <h1 class="title">{{event.title}}</h1>
+                  <p class="desc">{{dateTime(event)}}</p>
+                  <ul>
+                    <li style="width:100%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="fa fa-globe"></span> Artist Info</a></li>
+                  </ul>
+                </div>
+                <div class="social">
+                  <ul>
+                    <li style="width:33%;"><a href="#" class="btn btn-secondary btn-lg">
+                      <span class="glyphicon glyphicon-star"></span></a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            
           </div>
         </div>
       </div>
     </div>
-
 
   </div>
 </template>

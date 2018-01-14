@@ -11,7 +11,9 @@ body {
   margin: 0;
   padding: 0;
 }
-
+#saveButton {
+  background-color: orange;
+}
 .venue-info {
   color: orange;
   font-size: 20px;
@@ -39,7 +41,7 @@ h4 {
   padding: 80px 120px;
 }
 .container-small {
-  padding: 20px 50px;
+  padding-top: 10px;
 }
 .person {
   border: 10px solid transparent;
@@ -242,7 +244,7 @@ textarea {
 .event-list > li > .info > .title {
   font-size: 17pt;
   font-weight: 700;
-  margin: 0px;
+  margin: 12px 0 0 0;
 }
 .event-list > li > .info > .desc {
   font-size: 13pt;
