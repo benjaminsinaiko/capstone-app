@@ -162,18 +162,21 @@
                   <h1 class="title">{{event.title}}</h1>
                   <p class="desc">{{dateTime(event)}}</p>
                   <ul>
-                    <li style="width:100%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="fa fa-globe"></span> Artist Info</a></li>
+                    <li style="width:100%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class=""></span>Artist Info</a></li>
                   </ul>
                 </div>
                 <div class="social">
                   <ul>
-                    <li style="width:33%;"><a href="#" class="btn btn-secondary btn-lg">
-                      <span class="glyphicon glyphicon-star"></span></a></li>
+                    <li style="width:33%;">
+                      <!-- <a href="#" class="btn btn-secondary btn-lg">
+                      <span class="glyphicon glyphicon-star"></span></a> -->
+                      <button class="btn btn-secondary btn-sm" v-on:click="saveEvent(event)"><span class="glyphicon glyphicon-star"></span></button>
+                    </li>
                   </ul>
                 </div>
               </li>
             </ul>
-            
+
           </div>
         </div>
       </div>

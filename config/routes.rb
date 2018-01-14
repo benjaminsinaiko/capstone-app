@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   namespace :v1 do
     post '/users' => 'users#create'
 
+    get '/saved-events' => 'saved_events#index'
+    post '/saved-events' => 'saved_events#create'
 
     get '/venues' => 'venues#index'
 

@@ -299,6 +299,19 @@ var VenuesEventPage = {
       let datetime = event.datetime_local;
       let time = moment(datetime).format("LT");
       return time;
+    },
+    saveEvent: function(event) {
+      let params = {
+        event_name: event.title,
+        venue_name: event.venue.name,
+        venue_id: event.venue.id,
+        event_date: event.datetime_local,
+        user_id: 1
+      };
+      axios.post("v1/saved-events", params).then(function(response) {
+        // Do something after saving
+        console.log(params);
+      });
     }
   },
   computed: {
@@ -351,7 +364,8 @@ var ArtistInfoPage = {
       console.log("Artist Info: ", this.artistInfo);
       let artistURI = this.artistInfo.uri;
       console.log("Artist URI: ", artistURI);
-      this.artistPlaylist = "https://open.spotify.com/embed?uri=" + artistURI;
+      this.artistPlaylist =
+        "https://open.spotify.com/embed?theme=white&uri=" + artistURI;
       console.log("Artist playlist: ", this.artistPlaylist);
     });
   },
