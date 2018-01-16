@@ -1,7 +1,7 @@
 class V1::SavedEventsController < ApplicationController
 
   def index
-    saved_events = SavedEvent.all
+    saved_events = SavedEvent.where(user_id: 1)
     render json: saved_events.as_json
   end
 

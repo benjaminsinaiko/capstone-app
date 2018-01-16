@@ -400,6 +400,48 @@ var ArtistSearchPage = {
   computed: {}
 };
 
+// PROFILE PAGE................................................
+var ProfilePage = {
+  template: "#profile-page",
+  data: function() {
+    return {
+      message: "Profile Page",
+      savedEvents: [],
+      pastEvents: [],
+      futureEvents: []
+    };
+  },
+  mounted: function() {
+    axios.get("/v1/saved-events").then(response => {
+      this.savedEvents = response.data;
+      console.log("Saved Events: ", this.savedEvents);
+      // Create Todays Date
+      var a = new Date();
+      var m = a.getMonth();
+      var d = a.getDate();
+      var y = a.getFullYear();
+      var date = new Date(y, m + 1, d);
+      // Sort Events by Past and Present
+      for (var i = 0; i < this.savedEvents.length; i++) {
+        var dateString = this.savedEvents[i].event_date.replace(/\-/g, "");
+        var year = dateString.substring(0, 4);
+        var month = dateString.substring(4, 6);
+        var day = dateString.substring(6, 8);
+        var eventDate = new Date(year, month - 1, day);
+        if (eventDate < date) {
+          this.pastEvents.push(this.savedEvents[i]);
+        } else {
+          this.futureEvents.push(this.savedEvents[i]);
+        }
+      }
+      console.log("Past Events: ", this.pastEvents);
+      console.log("Future Events: ", this.futureEvents);
+    });
+  },
+  methods: {},
+  computed: {}
+};
+
 // SIGNUP PAGE..................................................................
 var SignupPage = {
   template: "#signup-page",
@@ -538,6 +580,7 @@ var router = new VueRouter({
     { path: "/venues/:id", component: VenuesEventPage },
     { path: "/artists", component: ArtistSearchPage },
     { path: "/artists/:id", component: ArtistInfoPage },
+    { path: "/profile", component: ProfilePage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/spotify-auth", component: SpotifyAuthPage },

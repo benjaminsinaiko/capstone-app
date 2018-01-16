@@ -28,6 +28,9 @@ body {
 .logo {
   font-family: "Rock Salt", cursive;
 }
+#profile-divider {
+  border-color: orange;
+}
 
 /* Parallax */
 .parallax {
