@@ -33,7 +33,7 @@ var HomePage = {
         console.log("return token: ", token);
         console.log("access token: ", accessToken);
         console.log("refresh token: ", refreshToken);
-        router.push("/spotify-callback");
+        router.push("/profile");
       });
     }
   },
@@ -524,11 +524,6 @@ var SpotifyAuthPage = {
       axios.get("v1/spotify/authorize").then(function(response) {
         let authUrl = response.data;
         console.log(authUrl);
-        // window.open(
-        //   authUrl.url,
-        //   "popUpWindow",
-        //   "height=650,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes"
-        // );
         window.location = authUrl.url;
       });
     }
@@ -540,7 +535,7 @@ var SpotifyCallbackPage = {
   template: "#spotify-callback-page",
   data: function() {
     return {
-      message: "Get Spotify Tokens",
+      message: "",
       profileData: {},
       displayName: ""
     };
@@ -553,22 +548,8 @@ var SpotifyCallbackPage = {
       this.profileData = response.data;
       this.displayName = response.data.display_name;
       console.log("profileData: ", this.profileData);
-      console.log("displayName: ", this.displayName);
-      // console.log(response.data);
     });
   },
-  // mounted: {
-  //   getProfile: function() {
-  //     let token = localStorage.getItem("spotifyToken");
-  //     console.log("spotifyToken is:", token);
-  //     let url =
-  //       "http://localhost:3000/v1/spotify/profile?access_token=" + token;
-  //     axios.get(url).then(function(response) {
-  //       let profileData = response.code;
-  //       console.log(profileData);
-  //     });
-  //   }
-  // },
   methods: {},
   computed: {}
 };
