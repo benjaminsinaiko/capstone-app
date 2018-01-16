@@ -408,7 +408,8 @@ var ProfilePage = {
       message: "Profile Page",
       savedEvents: [],
       pastEvents: [],
-      futureEvents: []
+      futureEvents: [],
+      visits: []
     };
   },
   mounted: function() {
@@ -434,12 +435,23 @@ var ProfilePage = {
           this.futureEvents.push(this.savedEvents[i]);
         }
       }
+      let venues = this.pastEvents.map(event => event.venue_name);
+      this.visits = venues.filter((x, i, a) => a.indexOf(x) === i);
+      console.log("Visits: ", this.visits);
+
       console.log("Past Events: ", this.pastEvents);
       console.log("Future Events: ", this.futureEvents);
     });
   },
   methods: {},
-  computed: {}
+  computed: {
+    attendedCount: function() {
+      return this.pastEvents.length;
+    },
+    visitedCount: function() {
+      return this.visits.length;
+    }
+  }
 };
 
 // SIGNUP PAGE..................................................................

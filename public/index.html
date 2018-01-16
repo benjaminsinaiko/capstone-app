@@ -252,9 +252,10 @@
 
 <!-- ............................................................... -->
 <!-- ............................................................... -->
-<!-- Profile Page -->
+<!-- PROFILE PAGE -->
 <template id="profile-page">
   <div>
+    <!-- AVATAR / TOP SECTION -->
     <div class="container bg-1">
       <h2>Benjamin Sinaiko</h2>
       <hr id="profile-divider">
@@ -265,21 +266,19 @@
         <div class="col-sm-4">
           <h2>Shows Attended</h2>
           <div class="container-small">
-            <h5 class="profile-count">13</h5>
+            <h5 class="profile-count">{{attendedCount}}</h5>
           </div>
         </div>
         <div class="col-sm-4">
           <h2>Venues Visited</h2>
           <div class="container-small">
-            <h5 class="profile-count">3</h5>
+            <h5 class="profile-count">{{visitedCount}}</h5>
           </div>
-          
         </div>
       </div>
       <hr id="profile-divider">
     </div>
-
-      
+    <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
       <div class="row-events">
         <div class="column-events">
