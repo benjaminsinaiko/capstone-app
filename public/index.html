@@ -299,13 +299,13 @@
         <!-- <li><a data-toggle="tab" href="#menu2">Peter</a></li> -->
       </ul>
 
-      <div class="tab-content" v-for="savedEvent in savedEvents">
-        <div id="home" class="tab-pane fade in active">
-          <h2>{{savedEvent.event_name}}</h2>
+      <div class="tab-content">
+        <div id="home" class="tab-pane fade in active" v-for="futureEvent in futureEvents">
+          <h2>{{futureEvent.artist_name}}</h2>
         </div>
-        <div id="menu1" class="tab-pane fade">
-<!--           <h2>Chandler Bing, Guitarist</h2>
-          <p>Always a pleasure people! Hope you enjoyed it as much as I did. Could I BE.. any more pleased?</p> -->
+        <div id="menu1" class="tab-pane fade" v-for="pastEvent in pastEvents">
+          <h2>{{pastEvent.artist_name}}</h2>
+          <!-- <p>Always a pleasure people! Hope you enjoyed it as much as I did. Could I BE.. any more pleased?</p> -->
         </div>
       </div>                           
 
