@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="index.css">
   <!-- Vue.js Scripts -->
@@ -34,7 +36,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span> 
           </button>
-          <a class="navbar-brand" href="/#/"><img src="actualize-small.png" alt=""></a><span class="navbar-brand">Capstone Project</span>
+          <a class="navbar-brand" href="/#/"><img src="actualize-small.png" alt=""></a>
+          <a href="/#/"><span class="navbar-brand logo">GoSee</span></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
@@ -76,7 +79,7 @@
   
   <div class="parallax">
     <hgroup>
-      <h1 id="header-parallax">GoSee</h1>
+      <h1 class="logo animated infinite pulse" id="header-parallax">GoSee</h1>
     </hgroup>
   </div>
 
@@ -162,7 +165,7 @@
                   <h1 class="title">{{event.title}}</h1>
                   <p class="desc">{{dateTime(event)}}</p>
                   <ul>
-                    <li style="width:100%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class=""></span>Artist Info</a></li>
+                    <li style="width:100%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
                   </ul>
                 </div>
                 <div class="social">
@@ -204,7 +207,7 @@
     <div class="container text-center">
       <div class="row">
         <div class="col-sm-6">
-          <h2><strong>{{ artistName }}</strong></h2>
+          <h1 class="animated bounceIn"><strong>{{ artistName }}</strong></h1>
           <br>
           <img :src="artistImage" class="img-circle person" alt="Artist Name">
         </div>
@@ -229,7 +232,7 @@
             <span class="pull-right"><button type="button" class="btn btn-primary" id="setlist-btn" data-toggle="modal" data-target="#exampleModal" v-on:click="setCurrentSetlist(setlist)">Setlist</button></span>
           </li>
           <!-- Setlist Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade animated slideInUp" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div style="text-align: center;" class="setlistImage"><img v-bind:src="currentURL" alt="Setlist" style="border: 0;" /></div>
             </div>
