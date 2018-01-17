@@ -45,10 +45,23 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/#/">HOME</a></li>
-            <li><a href="/#/artists/the-national">ARTISTS</a></li>
+            <!-- <li><a href="/#/artists/the-national">ARTISTS</a></li> -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">ARTIST
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <form class="navbar-form navbar-left">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                  </div>
+                  <a type="submit" class="btn btn-default" href="/#/artists/the-national">Search</a>
+                </form>
+              </ul>
+            </li>            
             <li><a href="/#/profile">PROFILE</a></li>
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">LOGIN
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
@@ -106,7 +119,7 @@
             <img v-bind:src="venue.avatar" alt="venue image">
             <p><strong>{{ venue.venue_name }}</strong></p>
             <p>{{ venue.venue_address }}</p>
-            <a v-bind:href="'/#/venues/' + venue.venue_sg_id" class="btn btn-primary">See Shows</a>
+            <a v-bind:href="'/#/venues/' + venue.venue_sg_id + '?cap=' + venue.capacity + '&ages=' + venue.ages" class="btn btn-primary">See Shows</a>
           </div>
         </div>
       </div>
@@ -137,7 +150,7 @@
         <div class="col-sm-4">
 
           <p><strong>Capacity</strong></p>
-          <p class="venue-info">1,500(ex)</p>
+          <p class="venue-info">{{capacity}}</p>
           <!-- <img src="" alt=""> -->
         </div>
         <div class="col-sm-4">
@@ -147,7 +160,7 @@
         </div>
         <div class="col-sm-4">
           <p><strong>Ages</strong></p>
-          <p class="venue-info">21+(ex)</p>
+          <p class="venue-info">{{ages}}</p>
           <!-- <img src="" alt=""> -->
         </div>
       </div>
@@ -169,7 +182,7 @@
                   <h1 class="title">{{event.title}}</h1>
                   <p class="desc">{{dateTime(event)}}</p>
                   <ul>
-                    <li style="width:100%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
+                    <li style="width:50%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
                   </ul>
                 </div>
                 <div class="social">
@@ -206,7 +219,7 @@
 
 <!-- ............................................................... -->
 <!-- ............................................................... -->
-<!-- Artist Info Page -->
+<!-- ARTIST INFO PAGE -->
 <template id="artist-info-page">
   <div>
     <!-- Aritst Name/Image -->
@@ -281,12 +294,15 @@
     <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
       <div class="row-events">
+        <!-- UPCOMING EVENTS -->
         <div class="column-events">
           <h3>Upcoming</h3>
           <div v-for="futureEvent in futureEvents">
-            <p>{{futureEvent.artist_name}}</p>
+            <p>{{futureEvent.artist_name}} | {{futureEvent.venue_name}}</p>
+            <hr id="event-divider">
           </div>
         </div>
+        <!-- PAST EVENTS -->
         <div class="column-events">
           <h3>Past Shows</h3>
           <div v-for="pastEvent in pastEvents">

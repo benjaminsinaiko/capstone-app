@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116053035) do
+ActiveRecord::Schema.define(version: 20180117005050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 20180116053035) do
     t.integer "venue_sg_id"
     t.string "address"
     t.string "avatar"
+    t.integer "capacity"
+    t.string "ages"
   end
 
 end

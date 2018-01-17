@@ -8,6 +8,7 @@ class V1::SavedEventsController < ApplicationController
   def create
     saved_event = SavedEvent.new(
       event_name: params["event_name"],
+      artist_name: params["artist_name"],
       venue_name: params["venue_name"],
       venue_id: params["venue_id"],
       event_date: params["event_date"],

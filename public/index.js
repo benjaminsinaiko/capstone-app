@@ -11,9 +11,6 @@ var HomePage = {
     };
   },
   created: function() {
-    // console.log("hello home page");
-    // console.log(this.$route.params);
-
     // Spotify Tokens
     var spotifyCode = window.location.href.split("?")[1]
       ? window.location.href.split("?")[1].split("code=")[1]
@@ -175,17 +172,24 @@ var VenuesEventPage = {
       message: "Venues Event Page",
       venueName: "",
       venueAddress: "",
-      events: []
+      events: [],
+      capacity: "",
+      ages: ""
     };
   },
   created: function() {
+    this.capacity = this.$route.query.cap;
+    this.ages = this.$route.query.ages;
+
     axios.get("v1/seatgeek/events/" + this.$route.params.id).then(
       function(response) {
         var eventsData = response.data.events;
         this.events = eventsData;
         this.venueName = eventsData[0].venue.name;
         this.venueAddress = eventsData[0].venue.address;
-        console.log(this.events);
+        console.log("Events: ", this.events);
+        console.log("capacity: ", this.capacity);
+        console.log("ages: ", this.ages);
 
         let coords = this.events[0].venue.location;
         let myLatLng = { lat: coords.lat, lng: coords.lon };
@@ -278,7 +282,8 @@ var VenuesEventPage = {
         var marker = new google.maps.Marker({
           position: myLatLng,
           map: map,
-          icon: pinSymbol("orange")
+          icon: pinSymbol("orange"),
+          animation: google.maps.Animation.BOUNCE
         });
       }.bind(this)
     );
@@ -303,6 +308,7 @@ var VenuesEventPage = {
     saveEvent: function(event) {
       let params = {
         event_name: event.title,
+        artist_name: event.performers[0].name,
         venue_name: event.venue.name,
         venue_id: event.venue.id,
         event_date: event.datetime_local,
@@ -416,28 +422,30 @@ var ProfilePage = {
     axios.get("/v1/saved-events").then(response => {
       this.savedEvents = response.data;
       console.log("Saved Events: ", this.savedEvents);
-      // Create Todays Date
+      // CREATE TODAYS DATE
       var a = new Date();
       var m = a.getMonth();
       var d = a.getDate();
       var y = a.getFullYear();
-      var date = new Date(y, m + 1, d);
-      // Sort Events by Past and Present
+      var date = new Date(y, m, d);
+      // SORTY EVENTS BY PAST / PRESENT
       for (var i = 0; i < this.savedEvents.length; i++) {
         var dateString = this.savedEvents[i].event_date.replace(/\-/g, "");
         var year = dateString.substring(0, 4);
         var month = dateString.substring(4, 6);
         var day = dateString.substring(6, 8);
         var eventDate = new Date(year, month - 1, day);
+
         if (eventDate < date) {
           this.pastEvents.push(this.savedEvents[i]);
         } else {
           this.futureEvents.push(this.savedEvents[i]);
         }
       }
+      // UNIQUE VENUE VISITS
       let venues = this.pastEvents.map(event => event.venue_name);
-      this.visits = venues.filter((x, i, a) => a.indexOf(x) === i);
-      console.log("Visits: ", this.visits);
+      this.visits = [...new Set(venues)];
+      // console.log("Visits: ", this.visits);
 
       console.log("Past Events: ", this.pastEvents);
       console.log("Future Events: ", this.futureEvents);

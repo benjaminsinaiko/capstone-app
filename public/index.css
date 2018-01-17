@@ -16,8 +16,9 @@ body {
 }
 .venue-info {
   color: orange;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
+  font-family: "Gill Sans", sans-serif;
 }
 .artist-links {
   text-decoration: none;
@@ -30,6 +31,10 @@ body {
 }
 #profile-divider {
   border-color: orange;
+}
+#event-divider {
+  border-color: orange;
+  width: 50%;
 }
 .column-events {
   float: left;
@@ -91,11 +96,18 @@ h4 {
 .container {
   padding: 80px 120px;
 }
+.container-artist {
+  padding: 60px 120px;
+}
 .container-md {
   padding: 40px 60px;
 }
 .container-small {
   padding-top: 10px;
+}
+.container-search {
+  padding-top: 40px;
+  text-decoration: none;
 }
 .person {
   border: 10px solid transparent;
@@ -300,11 +312,13 @@ textarea {
   font-size: 17pt;
   font-weight: 700;
   margin: 12px 0 0 0;
+  color: darkslategray;
 }
 .event-list > li > .info > .desc {
   font-size: 13pt;
   font-weight: 300;
   margin: 10px 0 0 0;
+  color: darkslategray;
 }
 .event-list > li > .info > ul,
 .event-list > li > .social > ul {
