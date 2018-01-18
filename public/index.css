@@ -53,6 +53,12 @@ body {
   display: table;
   clear: both;
 }
+.timeline-btn {
+  margin-top: 35px;
+}
+/*.last-year {
+  display: none;
+}*/
 
 /* Parallax */
 .parallax {
@@ -587,4 +593,3 @@ ul.twPc-Arrange {
   text-transform: uppercase;
   transition: color 0.15s ease-in-out 0s;
 }
-

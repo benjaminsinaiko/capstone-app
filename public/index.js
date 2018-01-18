@@ -415,7 +415,8 @@ var ProfilePage = {
       savedEvents: [],
       pastEvents: [],
       futureEvents: [],
-      visits: []
+      visits: [],
+      display: "none"
     };
   },
   mounted: function() {
@@ -451,7 +452,15 @@ var ProfilePage = {
       console.log("Future Events: ", this.futureEvents);
     });
   },
-  methods: {},
+  methods: {
+    changeDisplay: function() {
+      if (this.display === "none") {
+        this.display = "inline";
+      } else {
+        this.display = "none";
+      }
+    }
+  },
   computed: {
     attendedCount: function() {
       return this.pastEvents.length;

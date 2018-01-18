@@ -277,17 +277,17 @@
       </div>
     </div> -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=2&height=650' width='900px' height='900px' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
-        </div>
-      </div>
-    </div>
-
+    <div v-bind:style="{ 'display': display }">
+      <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
+    </div> 
 
     <!-- AVATAR / TOP SECTION -->
+          <div class="form-group">
+        <label class="col-md-4 control-label" for="singlebutton"></label>
+        <div class="col-md-4 center-block  timeline-btn">
+          <button id="singlebutton" name="singlebutton" class="btn btn-primary center-block" type="button" data-toggle="modal" data-target="#exampleModal" v-on:click="changeDisplay()">Year in Review</button>
+        </div>  
+      </div>
     <div class="container-artist bg-1">
       <h2>Benjamin Sinaiko</h2>
       <hr id="profile-divider">
@@ -309,12 +309,7 @@
         </div>
       </div>
       <hr id="profile-divider">
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <div class="col-md-4 center-block">
-          <button id="singlebutton" name="singlebutton" class="btn btn-primary center-block" type="button" data-toggle="modal" data-target="#exampleModal">Year in Review</button>
-        </div>  
-      </div>
+
     </div>
     <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
@@ -336,12 +331,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div>
-      <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
-    </div>                     
-
+    </div>                 
 
   </div>
 </template>
