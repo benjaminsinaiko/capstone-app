@@ -391,21 +391,6 @@ var ArtistInfoPage = {
   computed: {}
 };
 
-// ARTIST SEARCH PAGE................................................
-var ArtistSearchPage = {
-  template: "#artist-search-page",
-  data: function() {
-    return {
-      message: "Artist Search Page",
-      artistInfo: [],
-      artistName: ""
-    };
-  },
-  mounted: function() {},
-  methods: {},
-  computed: {}
-};
-
 // PROFILE PAGE................................................
 var ProfilePage = {
   template: "#profile-page",
@@ -416,7 +401,7 @@ var ProfilePage = {
       pastEvents: [],
       futureEvents: [],
       visits: [],
-      show: true
+      show: false
     };
   },
   mounted: function() {
@@ -588,7 +573,6 @@ var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/venues/:id", component: VenuesEventPage },
-    { path: "/artists", component: ArtistSearchPage },
     { path: "/artists/:id", component: ArtistInfoPage },
     { path: "/profile", component: ProfilePage },
     { path: "/signup", component: SignupPage },
