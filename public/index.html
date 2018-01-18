@@ -46,17 +46,19 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/#/">HOME</a></li>
             <!-- <li><a href="/#/artists/the-national">ARTISTS</a></li> -->
+            <!-- ARTIST SEARCH BAR -->
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">ARTIST
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <form class="navbar-form navbar-left">
+                <div class="navbar-form navbar-left">
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search" v-model="artistInput">
+                    <button class="btn btn-secondary" type="submit" v-on:click="submit()"></button>
                   </div>
-                  <a type="submit" class="btn btn-default" href="/#/artists/the-national">Search</a>
-                </form>
+                  <!-- <a type="submit" class="btn btn-default" href="/#/artists/the-national">Search</a> -->
+                </div>
               </ul>
             </li>            
             <li><a href="/#/profile">PROFILE</a></li>
@@ -268,8 +270,25 @@
 <!-- PROFILE PAGE -->
 <template id="profile-page">
   <div>
+    <!-- OVERLAY iFRAME -->
+<!--     <div id="overlay" onclick="off()">
+      <div id="timeline">
+        <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
+      </div>
+    </div> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=2&height=650' width='900px' height='900px' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
+        </div>
+      </div>
+    </div>
+
+
     <!-- AVATAR / TOP SECTION -->
-    <div class="container bg-1">
+    <div class="container-artist bg-1">
       <h2>Benjamin Sinaiko</h2>
       <hr id="profile-divider">
       <div class="row">
@@ -290,6 +309,12 @@
         </div>
       </div>
       <hr id="profile-divider">
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="singlebutton"></label>
+        <div class="col-md-4 center-block">
+          <button id="singlebutton" name="singlebutton" class="btn btn-primary center-block" type="button" data-toggle="modal" data-target="#exampleModal">Year in Review</button>
+        </div>  
+      </div>
     </div>
     <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
@@ -298,7 +323,8 @@
         <div class="column-events">
           <h3>Upcoming</h3>
           <div v-for="futureEvent in futureEvents">
-            <p>{{futureEvent.artist_name}} | {{futureEvent.venue_name}}</p>
+            <p><span class="badge">{{futureEvent.event_date}}</span>
+            {{futureEvent.artist_name}} | {{futureEvent.venue_name}}</p>
             <hr id="event-divider">
           </div>
         </div>
@@ -310,7 +336,11 @@
           </div>
         </div>
       </div>
-    </div>                         
+    </div>
+
+    <div>
+      <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=2&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
+    </div>                     
 
 
   </div>
@@ -392,3 +422,4 @@
     </div>
   </div>
 </template>
+

@@ -593,11 +593,26 @@ var router = new VueRouter({
 var app = new Vue({
   el: "#app",
   router: router,
+  data: function() {
+    return {
+      artistInput: ""
+    };
+  },
   created: function() {
     var spotifyToken = localStorage.getItem("spotifyToken");
     var jwt = localStorage.getItem("jwt");
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
+    }
+  },
+  methods: {
+    submit: function() {
+      // code
+      // let artistSlug = inputArtist.toLowerCase();
+      // console.log(this.artistInput);
+      let artistSlug = this.artistInput.replace(/\s+/g, "-").toLowerCase();
+      console.log(artistSlug);
+      router.push("/artists/" + artistSlug);
     }
   }
 });
