@@ -416,7 +416,7 @@ var ProfilePage = {
       pastEvents: [],
       futureEvents: [],
       visits: [],
-      display: "none"
+      show: true
     };
   },
   mounted: function() {
@@ -455,7 +455,7 @@ var ProfilePage = {
   methods: {
     changeDisplay: function() {
       if (this.display === "none") {
-        this.display = "inline";
+        this.display = "";
       } else {
         this.display = "none";
       }
@@ -616,11 +616,7 @@ var app = new Vue({
   },
   methods: {
     submit: function() {
-      // code
-      // let artistSlug = inputArtist.toLowerCase();
-      // console.log(this.artistInput);
       let artistSlug = this.artistInput.replace(/\s+/g, "-").toLowerCase();
-      console.log(artistSlug);
       router.push("/artists/" + artistSlug);
     }
   }
