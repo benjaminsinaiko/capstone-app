@@ -149,8 +149,38 @@ var HomePage = {
         google.maps.event.addListener(marker, "click", function() {
           infowindow.setContent(description);
           infowindow.open(map, this);
+          this.venueFilter = description;
+          console.log("venueFilter: ", this.venueFilter);
         });
       }
+    });
+  },
+  methods: {
+    isValidVenue: function(inputVenue) {
+      // return inputVenue.venue_name.includes(this.venueFilter);
+      return inputVenue.venue_name
+        .toLowerCase()
+        .includes(this.venueFilter.toLowerCase());
+    }
+  },
+  computed: {}
+};
+
+// HOME PAGE....................................................
+var VenuesPage = {
+  template: "#venues-page",
+  data: function() {
+    return {
+      message: "Venue List/Home Page",
+      venues: [],
+      venueFilter: ""
+    };
+  },
+  created: function() {},
+  mounted: function() {
+    axios.get("/v1/venues").then(response => {
+      this.venues = response.data;
+      console.log("venues: ", this.venues);
     });
   },
   methods: {
@@ -438,13 +468,13 @@ var ProfilePage = {
     });
   },
   methods: {
-    changeDisplay: function() {
-      if (this.display === "none") {
-        this.display = "";
-      } else {
-        this.display = "none";
-      }
-    }
+    // changeDisplay: function() {
+    //   if (this.display === "none") {
+    //     this.display = "";
+    //   } else {
+    //     this.display = "none";
+    //   }
+    // }
   },
   computed: {
     attendedCount: function() {
@@ -572,6 +602,7 @@ var SpotifyCallbackPage = {
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
+    { path: "/venues/", component: VenuesPage },
     { path: "/venues/:id", component: VenuesEventPage },
     { path: "/artists/:id", component: ArtistInfoPage },
     { path: "/profile", component: ProfilePage },
