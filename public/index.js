@@ -437,27 +437,14 @@ var ProfilePage = {
       futureEvents: [],
       visits: [],
       show: false,
-      currentFuture: [],
-      currentPast: []
+      currentPast: [],
+      currentSetlist: []
     };
   },
   mounted: function() {
     axios.get("/v1/saved-events").then(response => {
       this.savedEvents = response.data;
       console.log("Saved Events: ", this.savedEvents);
-
-      // LAST FM IMAGES
-      // for (let i = 0; i < this.savedEvents.length; i++) {
-      //   let artistSlug = this.savedEvents[i].artist_name.toLowerCase();
-      //   axios.get("/v1/lastfm/" + artistSlug).then(response => {
-      //     let artistInfo = response.data;
-      //     Vue.set(
-      //       this.savedEvents[i],
-      //       "image",
-      //       artistInfo.artist.image[2]["#text"]
-      //     );
-      //   });
-      // }
 
       // CREATE TODAYS DATE
       var a = new Date();
@@ -478,35 +465,47 @@ var ProfilePage = {
         } else {
           this.futureEvents.push(this.savedEvents[j]);
         }
+
         // LAST FM IMAGES
         for (let i = 0; i < this.futureEvents.length; i++) {
-          let artistSlug = this.futureEvents[i].artist_name.toLowerCase();
-          axios.get("/v1/lastfm/" + artistSlug).then(response => {
+          let artistSearch = this.futureEvents[i].artist_name.toLowerCase();
+          axios.get("/v1/lastfm/" + artistSearch).then(response => {
             let artistInfo = response.data;
             Vue.set(
               this.futureEvents[i],
               "image",
               artistInfo.artist.image[2]["#text"]
             );
+            Vue.set(
+              this.futureEvents[i],
+              "artistSlug",
+              artistInfo.artist.name
+                .split(" ")
+                .join("-")
+                .toLowerCase()
+            );
           });
         }
       }
+      // SORT EVENTS
+      // this.futureEvents = this.futureEvents.sort(function(a, b) {
+      //   return new Date(a.event_date) - new Date(b.event_date);
+      // });
+      // console.log(this.futureEvents);
+      this.pastEvents = this.pastEvents.sort(function(a, b) {
+        return new Date(b.event_date) - new Date(a.event_date);
+      });
+      console.log(this.pastEvents);
+
       // UNIQUE VENUE VISITS
       let venues = this.pastEvents.map(event => event.venue_name);
       this.visits = [...new Set(venues)];
-      console.log("Past Events: ", this.pastEvents);
-      console.log("Future Events: ", this.futureEvents);
 
-      this.currentFuture = this.futureEvents[0];
-      console.log("currentFuture: ", this.currentFuture);
       this.currentPast = this.pastEvents[0];
       console.log("currentPast: ", this.currentPast);
     });
   },
   methods: {
-    setCurrentFuture: function(inputEvent) {
-      this.currentFuture = inputEvent;
-    },
     setCurrentPast: function(inputEvent) {
       this.currentPast = inputEvent;
     }
@@ -517,6 +516,11 @@ var ProfilePage = {
     },
     visitedCount: function() {
       return this.visits.length;
+    },
+    reverseEvents: function() {
+      this.pastEvents.sort(function(a, b) {
+        return new Date(b.event_date) - new event.Date(a.event_date);
+      });
     }
   }
 };

@@ -339,7 +339,7 @@
               <h3>{{ futureEvent.artist_name }}</h3>
               <img v-bind:src="futureEvent.image" alt="venue image">
               <p>{{ futureEvent.venue_name }}</p>
-              <a href="">Artist info</a>
+              <a v-bind:href="'/#/artists/' + futureEvent.artistSlug">Artist info</a>
             </div>
           </div>
         </div>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get "/spotify/search" => "spotify#run_search"
 
     get '/setlists/:id' => 'setlists#artists'
+    get '/setlists/event/:id' => 'setlists#event'
 
     get '/lastfm/:id' => 'last_fm#artist'
   end
