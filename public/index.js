@@ -443,8 +443,13 @@ var ProfilePage = {
   },
   mounted: function() {
     axios.get("/v1/saved-events").then(response => {
-      this.savedEvents = response.data;
+      this.savedEvents = response.data.sort(function(a, b) {
+        return new Date(a.event_date) - new Date(b.event_date);
+      });
       console.log("Saved Events: ", this.savedEvents);
+      // this.savedEvents = this.pastEvents.sort(function(a, b) {
+      //   return new Date(b.event_date) - new Date(a.event_date);
+      // });
 
       // CREATE TODAYS DATE
       var a = new Date();
@@ -461,7 +466,7 @@ var ProfilePage = {
         var eventDate = new Date(year, month - 1, day);
 
         if (eventDate < date) {
-          this.pastEvents.push(this.savedEvents[j]);
+          this.pastEvents.unshift(this.savedEvents[j]);
         } else {
           this.futureEvents.push(this.savedEvents[j]);
         }
@@ -487,15 +492,6 @@ var ProfilePage = {
           });
         }
       }
-      // SORT EVENTS
-      // this.futureEvents = this.futureEvents.sort(function(a, b) {
-      //   return new Date(a.event_date) - new Date(b.event_date);
-      // });
-      // console.log(this.futureEvents);
-      this.pastEvents = this.pastEvents.sort(function(a, b) {
-        return new Date(b.event_date) - new Date(a.event_date);
-      });
-      console.log(this.pastEvents);
 
       // UNIQUE VENUE VISITS
       let venues = this.pastEvents.map(event => event.venue_name);
@@ -516,11 +512,6 @@ var ProfilePage = {
     },
     visitedCount: function() {
       return this.visits.length;
-    },
-    reverseEvents: function() {
-      this.pastEvents.sort(function(a, b) {
-        return new Date(b.event_date) - new event.Date(a.event_date);
-      });
     }
   }
 };

@@ -53,6 +53,10 @@ body {
   text-align: left;
   text-decoration: none;
 }
+.setlist-item {
+  margin: 10px;
+  padding: 20px 15px;
+}
 #event-divider {
   border-color: orange;
   text-align: left;

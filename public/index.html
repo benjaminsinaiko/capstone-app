@@ -267,7 +267,7 @@
         <h3 class="text-center">Past Dates</h3>
         <ul class="list-group">
           <!-- PREVIOUS SETS -->
-          <li class="list-group-item" v-for="setlist in setlists">
+          <li class="list-group-item setlist-item" v-for="setlist in setlists">
             <span class="label label-warning">{{setlist.eventDate}}</span>  {{setlist.venue.name}} | {{setlist.venue.city.name}}, {{setlist.venue.city.state}} 
             <!-- MODAL TRIGGER -->
             <span class="pull-right"><button type="button" class="btn btn-primary" id="setlist-btn" data-toggle="modal" data-target="#exampleModal" v-on:click="setCurrentSetlist(setlist)">Setlist</button></span>
