@@ -226,7 +226,7 @@ var VenuesEventPage = {
         let myLatLng = { lat: coords.lat, lng: coords.lon };
         let latLng = new google.maps.LatLng(coords.lat, coords.lon);
 
-        var map = new google.maps.Map(document.getElementById("map"), {
+        var map = new google.maps.Map(document.getElementById("map-venue"), {
           center: myLatLng,
           zoom: 15,
           styles: [
@@ -412,17 +412,6 @@ var ArtistInfoPage = {
       Vue.set(this.artistInfo, "lastImage", lastFm.artist.image[2]["#text"]);
       console.log("ArtistInfo: ", this.artistInfo);
     });
-    // for (let i = 0; i < this.futureEvents.length; i++) {
-    //   let artistSlug = this.futureEvents[i].artist_name.toLowerCase();
-    //   axios.get("/v1/lastfm/" + artistSlug).then(response => {
-    //     let artistInfo = response.data;
-    //     Vue.set(
-    //       this.futureEvents[i],
-    //       "image",
-    //       artistInfo.artist.image[2]["#text"]
-    //     );
-    //   });
-    // }
   },
 
   methods: {

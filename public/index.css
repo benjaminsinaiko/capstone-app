@@ -4,6 +4,9 @@
   height: 810px;
   /*filter: grayscale(100%);*/
 }
+#map-venue {
+  height: 610px;
+}
 .map-avatar {
   max-width: 10%;
 }
@@ -55,6 +58,18 @@ body {
   text-align: left;
   width: 100%;
 }
+.profile-events {
+  margin: 10px 0px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 12px;
+  box-shadow: 2px 2px gray;
+}
+.profile-events:hover {
+  border-color: orange;
+  transform: scale(1.05);
+  color: orange;
+}
 /* Clear floats after the columns */
 .row-events:after {
   content: "";
@@ -75,6 +90,9 @@ body {
 .artist-top {
   background-image: url("crowd.jpg");
   width: 100%;
+}
+.btn-save {
+  background-image: url("heart.jpg");
 }
 /* Parallax */
 .parallax {
@@ -225,12 +243,12 @@ h4,
 .nav-tabs li a {
   color: #777;
 }
-#googleMap {
+/*#googleMap {
   width: 100%;
   height: 400px;
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
-}
+}*/
 .navbar {
   font-family: Montserrat, sans-serif;
   margin-bottom: 0;

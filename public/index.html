@@ -173,11 +173,11 @@
   <div>
 
   <!-- MAP -->
-    <div id="map"></div>
+    <div id="map-venue"></div>
 
   <!-- VENUE HEADER -->
     <div class="container-small text-center">
-      <h1>{{venueName}}</h1>
+      <h1>{{ venueName }}</h1>
       <h3>{{ venueAddress }}</h3>
       <br>
       <div class="row">
@@ -201,7 +201,7 @@
     <div class="bg-1">
       <div class="container">
         <div class="row">
-          <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]" v-for="event in events">
+          <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ] event" v-for="event in events">
           <!-- EVENT LIST TEMPLATE -->
             <ul class="event-list">
               <li>
@@ -219,8 +219,6 @@
                 <div class="social">
                   <ul>
                     <li style="width:33%;">
-                      <!-- <a href="#" class="btn btn-secondary btn-lg">
-                      <span class="glyphicon glyphicon-star"></span></a> -->
                       <button class="btn btn-secondary btn-sm" v-on:click="saveEvent(event)"><span class="glyphicon glyphicon-star"></span></button>
                     </li>
                   </ul>
@@ -329,60 +327,21 @@
       </div>
       <hr id="profile-divider">
     </div>
-
-
-    <div class="row text-center">
-      <!-- SAMPLE UPCOMIONG EVENTS -->
-      <div class="col-sm-4" v-for="futureEvent in futureEvents">
-        <div class="thumbnail">
-          <p><strong>{{ futureEvent.artist_name }}</strong></p>
-          <img v-bind:src="futureEvent.image" alt="venue image">
-          
-          <p>{{ futureEvent.venue_name }}</p>
-        </div>
-      </div>
-    </div>
-
-
+    
     <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
       <div class="row-events">
-
-
-        <!-- UPCOMING EVENTS -->
-        <div class="column-events">
-          <h3>Upcoming Shows</h3>
-
-          <div v-for="futureEvent in futureEvents" class="profile-event">
-            <a href="" v-on:click="setCurrentEvent(inputEvent)"><span class="badge">{{futureEvent.event_date}}</span>
-            {{futureEvent.artist_name}} | {{futureEvent.venue_name}}</a>
-            <hr id="event-divider">
-          </div>
-
-
-        </div>
-
-        <!-- UPCOMING INFO -->
-        <div class="column-events">
-
-          <div class="row text-center">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4" >
-              <div class="thumbnail">
-                <h3>{{currentFuture.artist_name}}</h3>
-                <img src="sampleArtist.png" alt="Artist Image">
-                <p><strong>{{currentFuture.venue_name}}</strong></p>
-                <p>Fri. 27 November 2015</p>
-                <!-- <button class="btn">Buy Tickets</button> -->
-              </div>
-              <div class="col-sm-4"></div>
+        <!-- SAMPLE UPCOMIONG EVENTS -->
+        <div class="row text-center">
+          <h2>Upcoming Shows</h2>
+          <div class="col-sm-4" v-for="futureEvent in futureEvents">
+            <div class="profile-events">
+              <h3>{{ futureEvent.artist_name }}</h3>
+              <img v-bind:src="futureEvent.image" alt="venue image">
+              <p>{{ futureEvent.venue_name }}</p>
+              <a href="">Artist info</a>
             </div>
           </div>
-
-          
-
-
-
         </div>
       </div>
     </div>
