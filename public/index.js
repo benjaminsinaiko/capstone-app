@@ -7,11 +7,20 @@ var HomePage = {
     return {
       message: "Venue List/Home Page",
       venues: [],
-      venueFilter: ""
+      venueFilter: "",
+      position: {}
     };
   },
   created: function() {
-    // Spotify Tokens
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          this.position = position.coords;
+          console.log(this.position);
+        }.bind(this)
+      );
+    }
+    // SPOTIFY TOKENS
     var spotifyCode = window.location.href.split("?")[1]
       ? window.location.href.split("?")[1].split("code=")[1]
       : null;
@@ -35,14 +44,14 @@ var HomePage = {
     }
   },
   mounted: function() {
+    // GET VENUE DATA
     axios.get("/v1/venues").then(response => {
       this.venues = response.data;
-      // console.log("venues1: ", this.venues);
 
       /////// MAP ///////
       var map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 41.896634, lng: -87.647681 },
-        zoom: 12,
+        center: { lat: 41.892187, lng: -87.647681 },
+        zoom: 14,
         styles: [
           {
             featureType: "administrative",
@@ -115,7 +124,8 @@ var HomePage = {
       });
       console.log("venues: ", this.venues);
 
-      // Google Map Marker Color
+      // GOOGLE MAP MARKERS
+      // MARKER COLOR
       function pinSymbol(color) {
         return {
           path:
@@ -127,17 +137,16 @@ var HomePage = {
           scale: 1
         };
       }
-
+      // CREATE MARKERS
       for (var i = 0; i < this.venues.length; i++) {
         var coords = this.venues[i];
         var latLng = new google.maps.LatLng(coords.venue_lat, coords.venue_lng);
         // let venueName = this.venues[i].venue_name;
         let description = this.venues[i].venue_name;
-        // console.log(description);
+        let avatar = this.venues[i].avatar;
         var infowindow = new google.maps.InfoWindow({
-          content: description
+          // content: description
         });
-
         var marker = new google.maps.Marker({
           position: latLng,
           map: map,
@@ -146,18 +155,19 @@ var HomePage = {
         });
         this.venues[i].marker = marker;
 
+        // GOOGLE MAPS LISTENERS
         google.maps.event.addListener(marker, "click", function() {
-          infowindow.setContent(description);
+          infowindow.setContent(
+            '<img class="map-avatar" src="' + avatar + '" />'
+          );
           infowindow.open(map, this);
-          this.venueFilter = description;
-          console.log("venueFilter: ", this.venueFilter);
+          console.log(avatar);
         });
       }
     });
   },
   methods: {
     isValidVenue: function(inputVenue) {
-      // return inputVenue.venue_name.includes(this.venueFilter);
       return inputVenue.venue_name
         .toLowerCase()
         .includes(this.venueFilter.toLowerCase());
@@ -166,7 +176,7 @@ var HomePage = {
   computed: {}
 };
 
-// HOME PAGE....................................................
+// VENUES PAGE....................................................
 var VenuesPage = {
   template: "#venues-page",
   data: function() {
@@ -373,15 +383,13 @@ var ArtistInfoPage = {
     };
   },
   mounted: function() {
-    // Get setlist
+    // GET SETLIST
     axios.get("/v1/setlists/" + this.$route.params.id).then(response => {
       this.setlists = response.data.setlist;
       this.artistName = this.setlists[0].artist.name;
-      // console.log("setlists: ", this.setlists);
-      // console.log("Artist: ", this.artistName);
     });
 
-    // Get Spotify token from localStorage
+    // GET SPOTIFY TOKEN FROM LOCALSTORAGE
     let token = localStorage.getItem("spotifyToken");
     console.log("spotifyToken is:", token);
     let searchUrl =
@@ -389,12 +397,11 @@ var ArtistInfoPage = {
       this.$route.params.id +
       "&access_token=" +
       token;
-    // console.log("searchURL: ", searchUrl);
 
-    // Search Artist on Spotify
+    // SEARCH ARTIST ON SPOTIFY
     axios.get(searchUrl).then(response => {
       let searchResults = response.data;
-      // Artist Info
+      // ARTIST INFO
       this.artistInfo = response.data[0];
       this.artistImage = this.artistInfo.images[0].url;
       console.log("Artist Info: ", this.artistInfo);
@@ -409,13 +416,10 @@ var ArtistInfoPage = {
   methods: {
     setCurrentSetlist: function(inputSetlist) {
       this.currentSetlist = inputSetlist;
-      // console.log("current: ", this.currentSetlist);
       let setlistId = this.currentSetlist.id;
-      // console.log("id: ", setlistId);
       this.currentURL =
         "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
         setlistId;
-      // console.log("url:", this.currentURL);
     }
   },
   computed: {}
@@ -461,21 +465,12 @@ var ProfilePage = {
       // UNIQUE VENUE VISITS
       let venues = this.pastEvents.map(event => event.venue_name);
       this.visits = [...new Set(venues)];
-      // console.log("Visits: ", this.visits);
 
       console.log("Past Events: ", this.pastEvents);
       console.log("Future Events: ", this.futureEvents);
     });
   },
-  methods: {
-    // changeDisplay: function() {
-    //   if (this.display === "none") {
-    //     this.display = "";
-    //   } else {
-    //     this.display = "none";
-    //   }
-    // }
-  },
+  methods: {},
   computed: {
     attendedCount: function() {
       return this.pastEvents.length;
@@ -630,6 +625,7 @@ var app = new Vue({
     }
   },
   methods: {
+    // ARTIST SEARCH IN NAVBAR
     submit: function() {
       let artistSlug = this.artistInput.replace(/\s+/g, "-").toLowerCase();
       router.push("/artists/" + artistSlug);
