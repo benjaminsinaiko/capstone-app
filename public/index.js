@@ -12,14 +12,6 @@ var HomePage = {
     };
   },
   created: function() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          this.position = position.coords;
-          console.log(this.position);
-        }.bind(this)
-      );
-    }
     // SPOTIFY TOKENS
     var spotifyCode = window.location.href.split("?")[1]
       ? window.location.href.split("?")[1].split("code=")[1]
@@ -195,7 +187,6 @@ var VenuesPage = {
   },
   methods: {
     isValidVenue: function(inputVenue) {
-      // return inputVenue.venue_name.includes(this.venueFilter);
       return inputVenue.venue_name
         .toLowerCase()
         .includes(this.venueFilter.toLowerCase());
@@ -411,6 +402,27 @@ var ArtistInfoPage = {
         "https://open.spotify.com/embed?theme=white&uri=" + artistURI;
       console.log("Artist playlist: ", this.artistPlaylist);
     });
+
+    // LAST FM INFO
+    let artistSlug = this.$route.params.id.replace(/\-/g, " ");
+    console.log(artistSlug);
+    axios.get("/v1/lastfm/" + artistSlug).then(response => {
+      let lastFm = response.data;
+      Vue.set(this.artistInfo, "bio", lastFm.artist.bio.summary.split("<")[0]);
+      Vue.set(this.artistInfo, "lastImage", lastFm.artist.image[2]["#text"]);
+      console.log("ArtistInfo: ", this.artistInfo);
+    });
+    // for (let i = 0; i < this.futureEvents.length; i++) {
+    //   let artistSlug = this.futureEvents[i].artist_name.toLowerCase();
+    //   axios.get("/v1/lastfm/" + artistSlug).then(response => {
+    //     let artistInfo = response.data;
+    //     Vue.set(
+    //       this.futureEvents[i],
+    //       "image",
+    //       artistInfo.artist.image[2]["#text"]
+    //     );
+    //   });
+    // }
   },
 
   methods: {
@@ -435,13 +447,29 @@ var ProfilePage = {
       pastEvents: [],
       futureEvents: [],
       visits: [],
-      show: false
+      show: false,
+      currentFuture: [],
+      currentPast: []
     };
   },
   mounted: function() {
     axios.get("/v1/saved-events").then(response => {
       this.savedEvents = response.data;
       console.log("Saved Events: ", this.savedEvents);
+
+      // LAST FM IMAGES
+      // for (let i = 0; i < this.savedEvents.length; i++) {
+      //   let artistSlug = this.savedEvents[i].artist_name.toLowerCase();
+      //   axios.get("/v1/lastfm/" + artistSlug).then(response => {
+      //     let artistInfo = response.data;
+      //     Vue.set(
+      //       this.savedEvents[i],
+      //       "image",
+      //       artistInfo.artist.image[2]["#text"]
+      //     );
+      //   });
+      // }
+
       // CREATE TODAYS DATE
       var a = new Date();
       var m = a.getMonth();
@@ -449,28 +477,51 @@ var ProfilePage = {
       var y = a.getFullYear();
       var date = new Date(y, m, d);
       // SORTY EVENTS BY PAST / PRESENT
-      for (var i = 0; i < this.savedEvents.length; i++) {
-        var dateString = this.savedEvents[i].event_date.replace(/\-/g, "");
+      for (let j = 0; j < this.savedEvents.length; j++) {
+        var dateString = this.savedEvents[j].event_date.replace(/\-/g, "");
         var year = dateString.substring(0, 4);
         var month = dateString.substring(4, 6);
         var day = dateString.substring(6, 8);
         var eventDate = new Date(year, month - 1, day);
 
         if (eventDate < date) {
-          this.pastEvents.push(this.savedEvents[i]);
+          this.pastEvents.push(this.savedEvents[j]);
         } else {
-          this.futureEvents.push(this.savedEvents[i]);
+          this.futureEvents.push(this.savedEvents[j]);
+        }
+        // LAST FM IMAGES
+        for (let i = 0; i < this.futureEvents.length; i++) {
+          let artistSlug = this.futureEvents[i].artist_name.toLowerCase();
+          axios.get("/v1/lastfm/" + artistSlug).then(response => {
+            let artistInfo = response.data;
+            Vue.set(
+              this.futureEvents[i],
+              "image",
+              artistInfo.artist.image[2]["#text"]
+            );
+          });
         }
       }
       // UNIQUE VENUE VISITS
       let venues = this.pastEvents.map(event => event.venue_name);
       this.visits = [...new Set(venues)];
-
       console.log("Past Events: ", this.pastEvents);
       console.log("Future Events: ", this.futureEvents);
+
+      this.currentFuture = this.futureEvents[0];
+      console.log("currentFuture: ", this.currentFuture);
+      this.currentPast = this.pastEvents[0];
+      console.log("currentPast: ", this.currentPast);
     });
   },
-  methods: {},
+  methods: {
+    setCurrentFuture: function(inputEvent) {
+      this.currentFuture = inputEvent;
+    },
+    setCurrentPast: function(inputEvent) {
+      this.currentPast = inputEvent;
+    }
+  },
   computed: {
     attendedCount: function() {
       return this.pastEvents.length;

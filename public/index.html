@@ -30,7 +30,7 @@
 <body>
   <div id="app">
 
-    <!-- Navbar -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -79,8 +79,8 @@
     <router-view></router-view>
   </div>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- OPTIONAL JAVASCRIPT -->
+  <!-- JQUERY FIRST, THEN POPPER.JS, THEN BOOTSTRAP JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -89,7 +89,7 @@
 </html>
 
 <!-- ............................................................... -->
-<!-- Home Page -->
+<!-- HOME PAGE -->
 <template id="home-page">
 <div>
   
@@ -185,27 +185,24 @@
 
           <p><strong>Capacity</strong></p>
           <p class="venue-info">{{capacity}}</p>
-          <!-- <img src="" alt=""> -->
         </div>
         <div class="col-sm-4">
           <p><strong>Upcoming Events</strong></p>
           <p class="venue-info">{{eventsCount}}</p>
-          <!-- <img src="" alt=""> -->
         </div>
         <div class="col-sm-4">
           <p><strong>Ages</strong></p>
           <p class="venue-info">{{ages}}</p>
-          <!-- <img src="" alt=""> -->
         </div>
       </div>
     </div>
 
-  <!-- Event List -->
+  <!-- EVENT LIST -->
     <div class="bg-1">
       <div class="container">
         <div class="row">
           <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]" v-for="event in events">
-          <!-- Event List Template -->
+          <!-- EVENT LIST TEMPLATE -->
             <ul class="event-list">
               <li>
                 <time>
@@ -244,35 +241,40 @@
 <!-- ARTIST INFO PAGE -->
 <template id="artist-info-page">
   <div>
-    <!-- Aritst Name/Image -->
-    <div class="container text-center">
+    <!-- ARTIST NAME/IMAGE -->
+    <div class="container text-center artist-top">
       <div class="row">
         <div class="col-sm-6">
           <h1 class="animated bounceIn"><strong>{{ artistName }}</strong></h1>
           <br>
-          <img :src="artistImage" class="img-circle person" alt="Artist Name">
+          <img :src="artistInfo.lastImage" class="img-circle person" alt="Artist Name">
         </div>
         <div class="col-sm-6">
-<!--           <p><strong>Top Tracks</strong></p><br> -->
-          <!-- Spotify Player -->
+          <!-- SPOTIFY PLAYER -->
           <br>
           <iframe :src="artistPlaylist" width="450" height="400" frameborder="0" allowtransparency="true"></iframe>
         </div>
       </div>
     </div>
-
-    <!-- Setlist info -->
+    
     <div class="bg-1">
+      <div class="container">
+        <p>{{ artistInfo.bio }}</p>
+      </div>
+    </div>
+
+    <!-- SETLIST INFO -->
+    <div class="">
       <div class="container">
         <h3 class="text-center">Past Dates</h3>
         <ul class="list-group">
-          <!-- Previous Sets -->
+          <!-- PREVIOUS SETS -->
           <li class="list-group-item" v-for="setlist in setlists">
             <span class="label label-warning">{{setlist.eventDate}}</span>  {{setlist.venue.name}} | {{setlist.venue.city.name}}, {{setlist.venue.city.state}} 
-            <!-- Modal Trigger -->
+            <!-- MODAL TRIGGER -->
             <span class="pull-right"><button type="button" class="btn btn-primary" id="setlist-btn" data-toggle="modal" data-target="#exampleModal" v-on:click="setCurrentSetlist(setlist)">Setlist</button></span>
           </li>
-          <!-- Setlist Modal -->
+          <!-- SETLIST MODAL -->
           <div class="modal fade animated slideInUp" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div style="text-align: center;" class="setlistImage"><img v-bind:src="currentURL" alt="Setlist" style="border: 0;" /></div>
@@ -299,12 +301,12 @@
     </transition>
 
     <!-- AVATAR / TOP SECTION -->
-          <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <div class="col-md-4 center-block  timeline-btn">
-          <button id="singlebutton" name="singlebutton" class="btn btn-primary center-block" type="button" data-toggle="modal" data-target="#exampleModal" v-on:click="show = !show">Year in Review</button>
-        </div>  
-      </div>
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4 center-block  timeline-btn">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary center-block" type="button" data-toggle="modal" data-target="#exampleModal" v-on:click="show = !show">Year in Review</button>
+      </div>  
+    </div>
     <div class="container-artist bg-1">
       <h2>Benjamin Sinaiko</h2>
       <hr id="profile-divider">
@@ -326,19 +328,70 @@
         </div>
       </div>
       <hr id="profile-divider">
-
     </div>
+
+
+    <div class="row text-center">
+      <!-- SAMPLE UPCOMIONG EVENTS -->
+      <div class="col-sm-4" v-for="futureEvent in futureEvents">
+        <div class="thumbnail">
+          <p><strong>{{ futureEvent.artist_name }}</strong></p>
+          <img v-bind:src="futureEvent.image" alt="venue image">
+          
+          <p>{{ futureEvent.venue_name }}</p>
+        </div>
+      </div>
+    </div>
+
+
     <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
       <div class="row-events">
+
+
         <!-- UPCOMING EVENTS -->
         <div class="column-events">
-          <h3>Upcoming</h3>
-          <div v-for="futureEvent in futureEvents">
-            <p><span class="badge">{{futureEvent.event_date}}</span>
-            {{futureEvent.artist_name}} | {{futureEvent.venue_name}}</p>
+          <h3>Upcoming Shows</h3>
+
+          <div v-for="futureEvent in futureEvents" class="profile-event">
+            <a href="" v-on:click="setCurrentEvent(inputEvent)"><span class="badge">{{futureEvent.event_date}}</span>
+            {{futureEvent.artist_name}} | {{futureEvent.venue_name}}</a>
             <hr id="event-divider">
           </div>
+
+
+        </div>
+
+        <!-- UPCOMING INFO -->
+        <div class="column-events">
+
+          <div class="row text-center">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" >
+              <div class="thumbnail">
+                <h3>{{currentFuture.artist_name}}</h3>
+                <img src="sampleArtist.png" alt="Artist Image">
+                <p><strong>{{currentFuture.venue_name}}</strong></p>
+                <p>Fri. 27 November 2015</p>
+                <!-- <button class="btn">Buy Tickets</button> -->
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+          </div>
+
+          
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-md bg-1">
+      <div class="row-events">
+        <!-- PAST INFO -->
+        <div class="column-events">
+          <p>past info</p>
         </div>
         <!-- PAST EVENTS -->
         <div class="column-events">
@@ -348,16 +401,9 @@
           </div>
         </div>
       </div>
-    </div>   
+    </div> 
 
 
-<!--     <button v-on:click="show = !show">
-    Toggle
-  <transition name="fade">
-    <div v-if="show">
-      <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1aKwc3oDxF6-zD2V58uYAfojitA3QynSxJh0wMkzYNqs&font=Default&lang=en&initial_zoom=3&height=750' width='100%' height='750' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
-    </div>
-  </transition> -->
 
   </div>
 </template>

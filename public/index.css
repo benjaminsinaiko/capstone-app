@@ -35,10 +35,6 @@ body {
 #profile-divider {
   border-color: orange;
 }
-#event-divider {
-  border-color: orange;
-  width: 50%;
-}
 .column-events {
   float: left;
   width: 50%;
@@ -49,6 +45,15 @@ body {
   font-size: 80px;
   font-family: "Permanent Marker", cursive;
   color: orange;
+}
+.profile-event {
+  text-align: left;
+  text-decoration: none;
+}
+#event-divider {
+  border-color: orange;
+  text-align: left;
+  width: 100%;
 }
 /* Clear floats after the columns */
 .row-events:after {
@@ -67,7 +72,10 @@ body {
 .fade-leave-to {
   opacity: 0;
 }
-
+.artist-top {
+  background-image: url("crowd.jpg");
+  width: 100%;
+}
 /* Parallax */
 .parallax {
   /* The image used */
@@ -606,4 +614,3 @@ ul.twPc-Arrange {
   text-transform: uppercase;
   transition: color 0.15s ease-in-out 0s;
 }
-
