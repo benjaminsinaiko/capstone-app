@@ -347,14 +347,14 @@
     </div>
 
     <div class="container-md bg-1">
+                <h3 class="text-center">Past Shows</h3>
       <div class="row-events">
         <!-- PAST INFO -->
         <div class="column-events">
-          <p>past info</p>
+          <img :src="currentSetlist" alt="setlist">
         </div>
         <!-- PAST EVENTS -->
         <div class="column-events">
-          <h3>Past Shows</h3>
           <div v-for="pastEvent in pastEvents">
             <p>{{pastEvent.artist_name}}</p>
           </div>

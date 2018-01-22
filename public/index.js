@@ -375,7 +375,7 @@ var ArtistInfoPage = {
   },
   mounted: function() {
     // GET SETLIST
-    axios.get("/v1/setlists/" + this.$route.params.id).then(response => {
+    axios.get("/v1/setlists/artist/" + this.$route.params.id).then(response => {
       this.setlists = response.data.setlist;
       this.artistName = this.setlists[0].artist.name;
     });
@@ -447,9 +447,6 @@ var ProfilePage = {
         return new Date(a.event_date) - new Date(b.event_date);
       });
       console.log("Saved Events: ", this.savedEvents);
-      // this.savedEvents = this.pastEvents.sort(function(a, b) {
-      //   return new Date(b.event_date) - new Date(a.event_date);
-      // });
 
       // CREATE TODAYS DATE
       var a = new Date();
@@ -499,12 +496,32 @@ var ProfilePage = {
 
       this.currentPast = this.pastEvents[0];
       console.log("currentPast: ", this.currentPast);
+
+      // GET SETILIST FOR PAST SHOW
+      let setDate = moment(this.currentPast.event_date).format("DD-MM-YYYY");
+      let setArtist = this.currentPast.artist_name
+        .split(" ")
+        .join("-")
+        .toLowerCase();
+      let setVenue = this.currentPast.venue_name
+        .split(" ")
+        .join("-")
+        .toLowerCase();
+      let params = { setDate, setArtist, setVenue };
+
+      axios.get("/v1/setlists/event/", { params }).then(response => {
+        let setId = response.data;
+        this.currentSetlist =
+          "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
+          setId;
+        console.log("currentSetlist: ", this.currentSetlist);
+      });
     });
   },
   methods: {
-    setCurrentPast: function(inputEvent) {
-      this.currentPast = inputEvent;
-    }
+    // setCurrentPast: function(inputEvent) {
+    //   this.currentPast = inputEvent;
+    // }
   },
   computed: {
     attendedCount: function() {

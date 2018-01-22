@@ -8,19 +8,16 @@ class V1::SetlistsController < ApplicationController
   end
 
   def event
-    artist = "big thief"
-    date = "2017-01-11"
-    venue = "schubas tavern"
+    date = params['setDate']
+    artist = params['setArtist']
+    venue = params['setVenue']
 
-    # repsonse = Unirest.get("https://api.setlist.fm/rest/1.0/search/setlists?date=#{date}&artistName=#{artist}",
-    #     headers:{ "Accept" => "application/json", "x-api-key" => "#{ENV['SETLIST_FM_API_KEY']}"})
-    repsonse = Unirest.get("https://api.setlist.fm/rest/1.0/search/setlists?date=01-11-2017&artistName=big-thief",
+    repsonse = Unirest.get("https://api.setlist.fm/rest/1.0/search/setlists?date=#{date}&artistName=#{artist}&venue=#{venue}",
         headers:{ "Accept" => "application/json", "x-api-key" => "#{ENV['SETLIST_FM_API_KEY']}"})
+
     setlist = repsonse.body["setlist"][0]["id"]
+    # setlist = repsonse.body
     render json: setlist.as_json
   end
 
 end
-
-
-# "v1/seatgeek/events/" + this.$route.params.id
