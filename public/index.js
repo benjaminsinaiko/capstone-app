@@ -437,7 +437,7 @@ var ProfilePage = {
       futureEvents: [],
       visits: [],
       show: false,
-      currentPast: [],
+      currentPastEvent: [],
       currentSetlist: []
     };
   },
@@ -489,39 +489,48 @@ var ProfilePage = {
           });
         }
       }
-
       // UNIQUE VENUE VISITS
       let venues = this.pastEvents.map(event => event.venue_name);
       this.visits = [...new Set(venues)];
 
-      this.currentPast = this.pastEvents[0];
-      console.log("currentPast: ", this.currentPast);
+      // SET CURRENT PAST EVENT
+      this.currentPastEvent = this.pastEvents[0];
+      console.log("currentPastEvent: ", this.currentPastEvent);
 
       // GET SETILIST FOR PAST SHOW
-      let setDate = moment(this.currentPast.event_date).format("DD-MM-YYYY");
-      let setArtist = this.currentPast.artist_name
+      this.getSetlist();
+    });
+  },
+  methods: {
+    getSetlist: function() {
+      // GET SETILIST FOR PAST SHOW
+      let setDate = moment(this.currentPastEvent.event_date).format(
+        "DD-MM-YYYY"
+      );
+      let setArtist = this.currentPastEvent.artist_name
         .split(" ")
         .join("-")
         .toLowerCase();
-      let setVenue = this.currentPast.venue_name
+      let setVenue = this.currentPastEvent.venue_name
         .split(" ")
         .join("-")
         .toLowerCase();
       let params = { setDate, setArtist, setVenue };
 
       axios.get("/v1/setlists/event/", { params }).then(response => {
-        let setId = response.data;
+        let setId = response.data.id;
         this.currentSetlist =
           "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
           setId;
         console.log("currentSetlist: ", this.currentSetlist);
+        console.log("ID: ", setId);
       });
-    });
-  },
-  methods: {
-    // setCurrentPast: function(inputEvent) {
-    //   this.currentPast = inputEvent;
-    // }
+    },
+    setCurrentPastEvent: function(pastEvent) {
+      this.currentPastEvent = pastEvent;
+      console.log("currentPastEvent: ", this.currentPastEvent);
+      this.getSetlist();
+    }
   },
   computed: {
     attendedCount: function() {

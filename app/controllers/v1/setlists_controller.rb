@@ -15,7 +15,7 @@ class V1::SetlistsController < ApplicationController
     repsonse = Unirest.get("https://api.setlist.fm/rest/1.0/search/setlists?date=#{date}&artistName=#{artist}&venue=#{venue}",
         headers:{ "Accept" => "application/json", "x-api-key" => "#{ENV['SETLIST_FM_API_KEY']}"})
 
-    setlist = repsonse.body["setlist"][0]["id"]
+    setlist = repsonse.body["setlist"][0]
     # setlist = repsonse.body
     render json: setlist.as_json
   end

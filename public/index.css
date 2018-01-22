@@ -67,7 +67,7 @@ body {
   padding: 10px;
   border: 1px solid gray;
   border-radius: 12px;
-  box-shadow: 2px 2px gray;
+  box-shadow: 5px 7px #888888;
 }
 .profile-events:hover {
   border-color: orange;
@@ -635,4 +635,19 @@ ul.twPc-Arrange {
   overflow: hidden;
   text-transform: uppercase;
   transition: color 0.15s ease-in-out 0s;
+}
+
+/*Unstyle links*/
+.link-unstyled,
+.link-unstyled:link,
+.link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+.bg-menu:hover {
+  background-color: orange;
+  color: #ffffff;
+}
+.clickable {
+  cursor: pointer;
 }

@@ -356,7 +356,11 @@
         <!-- PAST EVENTS -->
         <div class="column-events">
           <div v-for="pastEvent in pastEvents">
-            <p>{{pastEvent.artist_name}}</p>
+            <ul class="list-unstyled">
+              <li class="bg-menu clickable"><a class="link-unstyled" v-on:click="setCurrentPastEvent(pastEvent)"><p>{{pastEvent.artist_name}}</p></a>
+              </li>
+            </ul>
+            
           </div>
         </div>
       </div>
