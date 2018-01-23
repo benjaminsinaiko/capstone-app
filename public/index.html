@@ -121,18 +121,34 @@
     <hgroup>
       <h1 class="logo animated infinite   pulse" id="venues-parallax">Venues</h1>
     </hgroup>
-  </div>
-  
+  </div> 
  
   <!-- VENUE CONTAINER -->
   <div class="bg-1">
-    <div class="container">
+    <div class="container-md">
       <h3 class="text-center">
+        <h1 style="text-align: center;">Find a Venue</h1>
         <input type="text" class="form-control" v-model="venueFilter" placeholder="Search for venue" aria-label="Search for venue">
       </h3>
-
+    </div>
+  </div>
+<div class="container">
       <div class="row text-center">
         <!-- SAMPLE VENUE CARD -->
+        <div class="col-sm-4 info-card" v-for="venue in venues" v-if="isValidVenue(venue)">
+          <div class="thumbnail front">
+            <img v-bind:src="venue.avatar" alt="venue image">
+            <!-- <p style="font-size: 20px;">{{ venue.venue_name }}</p> -->
+          </div>
+          <div class="thumbnail back">
+            <p style="font-size: 20px;">{{ venue.venue_name }}</p>
+            <p>{{ venue.address }}</p>
+            <a v-bind:href="'/#/venues/' + venue.venue_sg_id + '?cap=' + venue.capacity + '&ages=' + venue.ages" class="btn btn-primary">See Shows</a>
+          </div>
+        </div>
+      </div>
+</div>
+<!-- 
         <div class="col-sm-4" v-for="venue in venues" v-if="isValidVenue(venue)">
           <div class="thumbnail">
             <img v-bind:src="venue.avatar" alt="venue image">
@@ -141,9 +157,10 @@
             <a v-bind:href="'/#/venues/' + venue.venue_sg_id + '?cap=' + venue.capacity + '&ages=' + venue.ages" class="btn btn-primary">See Shows</a>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </div> -->
+
+
+
 
 
 
@@ -180,10 +197,12 @@
           <p class="venue-info">{{ages}}</p>
         </div>
       </div>
+      <hr id="profile-divider">
     </div>
 
+
   <!-- EVENT LIST -->
-    <div class="bg-1">
+    <div >
       <div class="container">
         <div class="row">
           <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ] event" v-for="event in events">
@@ -198,13 +217,13 @@
                   <h1 class="title">{{event.title}}</h1>
                   <p class="desc">{{dateTime(event)}}</p>
                   <ul>
-                    <li style="width:50%;"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
+                    <li><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
                   </ul>
                 </div>
                 <div class="social">
                   <ul>
                     <li style="width:33%;">
-                      <button class="btn btn-secondary btn-sm" v-on:click="saveEvent(event)"><span class="glyphicon glyphicon-star"></span></button>
+                      <button class="btn-saved" v-on:click="saveEvent(event)"><span class="glyphicon glyphicon-heart"></span></button>
                     </li>
                   </ul>
                 </div>
