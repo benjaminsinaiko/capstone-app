@@ -10,6 +10,7 @@
 .map-avatar {
   max-width: 10%;
 }
+
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
@@ -31,6 +32,7 @@ body {
 }
 #setlist-btn {
   /* Update button size/location */
+  margin-top: -7px;
 }
 .logo {
   font-family: "Rock Salt", cursive;
@@ -56,6 +58,7 @@ body {
 .setlist-item {
   margin: 10px;
   padding: 20px 15px;
+  border-width: 3px;
 }
 #event-divider {
   border-color: orange;
@@ -103,11 +106,22 @@ body {
   /* The image used */
   background-image: url("BottomLounge_blur_bw.jpg");
   /*filter: grayscale(90%);*/ /* blur(4px) make all photos black and white */
-
   /* Full height */
   height: 700px;
   margin-top: 50px;
-
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.venues-parallax {
+  /* The image used */
+  background-image: url("venue-image.jpg");
+  filter: grayscale(90%); /* make all photos black and white */
+  /* Full height */
+  height: 400px;
+  margin-top: 50px;
   /* Create the parallax scrolling effect */
   background-attachment: fixed;
   background-position: center;
@@ -119,6 +133,19 @@ body {
   font-size: 60px;
   position: absolute;
   top: 35%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-style: solid;
+  border-color: orange;
+  border-width: 7px;
+  color: white;
+}
+#venues-parallax {
+  text-align: center;
+  font-size: 60px;
+  position: absolute;
+  top: 17%;
   left: 43%;
   transform: translate(-50%, -50%);
   padding: 20px;
@@ -225,6 +252,14 @@ h4 {
   color: #f1f1f1;
   border-radius: 0;
   transition: 0.2s;
+}
+.btn-search {
+  padding: 10px 20px;
+  background-color: orange;
+  color: white;
+  border-radius: 0;
+  transition: 0.2s;
+  text-align: center;
 }
 .btn:hover,
 .btn:focus {

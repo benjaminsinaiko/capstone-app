@@ -133,27 +133,42 @@ var HomePage = {
       for (var i = 0; i < this.venues.length; i++) {
         var coords = this.venues[i];
         var latLng = new google.maps.LatLng(coords.venue_lat, coords.venue_lng);
-        // let venueName = this.venues[i].venue_name;
-        let description = this.venues[i].venue_name;
+        let venueName = this.venues[i].venue_name;
         let avatar = this.venues[i].avatar;
+        let venueUrl =
+          "/#/venues/" +
+          this.venues[i].venue_sg_id +
+          "?cap=" +
+          this.venues[i].capacity +
+          "&ages=" +
+          this.venues[i].ages;
+
         var infowindow = new google.maps.InfoWindow({
-          // content: description
+          maxWidth: 225
         });
         var marker = new google.maps.Marker({
           position: latLng,
           map: map,
-          info: description,
+          info: venueName,
           icon: pinSymbol("orange")
         });
         this.venues[i].marker = marker;
 
         // GOOGLE MAPS LISTENERS
         google.maps.event.addListener(marker, "click", function() {
+          // map.panTo(marker.getPosition());
           infowindow.setContent(
-            '<img class="map-avatar" src="' + avatar + '" />'
+            '<img class="map-avatar" style="width: 40%; height: 40%; float: left; margin-right: 5px;" src="' +
+              avatar +
+              '" />' +
+              '<div id="content"><h5 style="text-align: center;">' +
+              venueName +
+              "</h5></div><br>" +
+              '<p style="text-align: center;"><a href=' +
+              venueUrl +
+              ">See Shows</a></p>"
           );
           infowindow.open(map, this);
-          console.log(avatar);
         });
       }
     });
@@ -178,7 +193,10 @@ var VenuesPage = {
       venueFilter: ""
     };
   },
-  created: function() {},
+  created: function() {
+    //Scrolls to top when view is displayed
+    window.scrollTo(0, 0);
+  },
   mounted: function() {
     axios.get("/v1/venues").then(response => {
       this.venues = response.data;
@@ -209,6 +227,9 @@ var VenuesEventPage = {
     };
   },
   created: function() {
+    //Scrolls to top when view is displayed
+    window.scrollTo(0, 0);
+
     this.capacity = this.$route.query.cap;
     this.ages = this.$route.query.ages;
 
@@ -373,6 +394,10 @@ var ArtistInfoPage = {
       artistPlaylist: ""
     };
   },
+  created: function() {
+    //Scrolls to top when view is displayed
+    window.scrollTo(0, 0);
+  },
   mounted: function() {
     // GET SETLIST
     axios.get("/v1/setlists/artist/" + this.$route.params.id).then(response => {
@@ -440,6 +465,10 @@ var ProfilePage = {
       currentPastEvent: [],
       currentSetlist: []
     };
+  },
+  created: function() {
+    //Scrolls to top when view is displayed
+    window.scrollTo(0, 0);
   },
   mounted: function() {
     axios.get("/v1/saved-events").then(response => {

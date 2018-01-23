@@ -52,9 +52,11 @@
               </a>
               <ul class="dropdown-menu">
                 <div class="navbar-form navbar-left">
-                  <div class="form-group">
+                  <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" v-model="artistInput">
-                    <button class="btn btn-secondary" type="submit" v-on:click="submit()"></button>
+
+                      <button class="btn-search" type="submit" v-on:click="submit()">go</button>
+
                   </div>
                 </div>
               </ul>
@@ -137,6 +139,12 @@
 <!-- VENUES PAGE -->
 <template id="venues-page">
 <div>
+
+  <div class="venues-parallax">
+    <hgroup>
+      <h1 class="logo animated infinite   pulse" id="venues-parallax">Venues</h1>
+    </hgroup>
+  </div>
   
  
   <!-- VENUE CONTAINER -->
@@ -331,7 +339,7 @@
     <!-- FUTURE / PAST EVENTS -->
     <div class="container-md">
       <div class="row-events">
-        <!-- SAMPLE UPCOMIONG EVENTS -->
+        <!-- UPCOMIONG EVENTS -->
         <div class="row text-center">
           <h2>Upcoming Shows</h2>
           <div class="col-sm-4" v-for="futureEvent in futureEvents">
@@ -339,6 +347,7 @@
               <h3>{{ futureEvent.artist_name }}</h3>
               <img v-bind:src="futureEvent.image" alt="venue image">
               <p>{{ futureEvent.venue_name }}</p>
+              <p>{{ futureEvent.eventDate }}</p>
               <a v-bind:href="'/#/artists/' + futureEvent.artistSlug">Artist info</a>
             </div>
           </div>
