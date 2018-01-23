@@ -390,6 +390,7 @@ var ArtistInfoPage = {
       currentSetlist: {},
       currentURL: [],
       artistInfo: [],
+      similarArtists: [],
       artistImage: {},
       artistPlaylist: ""
     };
@@ -407,7 +408,7 @@ var ArtistInfoPage = {
 
     // GET SPOTIFY TOKEN FROM LOCALSTORAGE
     let token = localStorage.getItem("spotifyToken");
-    console.log("spotifyToken is:", token);
+    // console.log("spotifyToken is:", token);
     let searchUrl =
       "/v1/spotify/search?artist=" +
       this.$route.params.id +
@@ -420,17 +421,35 @@ var ArtistInfoPage = {
       // ARTIST INFO
       this.artistInfo = response.data[0];
       this.artistImage = this.artistInfo.images[0].url;
-      console.log("Artist Info: ", this.artistInfo);
       let artistURI = this.artistInfo.uri;
-      console.log("Artist URI: ", artistURI);
       this.artistPlaylist =
         "https://open.spotify.com/embed?theme=white&uri=" + artistURI;
-      console.log("Artist playlist: ", this.artistPlaylist);
+
+      // GET RELATED ARTISTS
+      console.log(this.artistInfo.id);
+      let relatedUrl =
+        "/v1/spotify/related?artistId=" +
+        this.artistInfo.id +
+        "&access_token=" +
+        token;
+      axios.get(relatedUrl).then(response => {
+        this.similarArtists = response.data;
+        for (let i = 0; i < this.similarArtists.length; i++) {
+          Vue.set(
+            this.similarArtists[i],
+            "artistSlug",
+            this.similarArtists[i].name
+              .split(" ")
+              .join("-")
+              .toLowerCase()
+          );
+        }
+        console.log("similarArtists: ", this.similarArtists);
+      });
     });
 
     // LAST FM INFO
     let artistSlug = this.$route.params.id.replace(/\-/g, " ");
-    console.log(artistSlug);
     axios.get("/v1/lastfm/" + artistSlug).then(response => {
       let lastFm = response.data;
       Vue.set(this.artistInfo, "bio", lastFm.artist.bio.summary.split("<")[0]);
@@ -446,6 +465,9 @@ var ArtistInfoPage = {
       this.currentURL =
         "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
         setlistId;
+    },
+    refresh: function() {
+      location.reload();
     }
   },
   computed: {}

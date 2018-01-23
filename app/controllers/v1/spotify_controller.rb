@@ -44,25 +44,19 @@ class V1::SpotifyController < ApplicationController
         "Authorization" => "Bearer #{params[:access_token]}"
       }
     )
-
-    # save artist id
     artists = response.body
     artist = artists["artists"]["items"].first
-    # render json: artist.as_json
-    # artist_id = artist["id"]
-
-    # # search top tracks by artist_id
-    # response = Unirest.get(
-    #   "https://api.spotify.com/v1/artists/#{artist_id}/top-tracks?country=US",
-    #   headers: {
-    #     "Authorization" => "Bearer #{params[:access_token]}"
-    #   }
-    # )
-    # artist_tracks = response.body["tracks"].first(5)
-    # # Get an array of top 5 tracks
-    # top_tracks = artist_tracks.map { |track| track.values_at("name", "preview_url")}.first(5)
-    # removed .to_h
     render json: [artist]
+  end
+
+  def related
+    response = Unirest.get("https://api.spotify.com/v1/artists/#{params[:artistId]}/related-artists",
+      headers: {
+        "Authorization" => "Bearer #{params[:access_token]}"
+      }
+    )
+    related = response.body["artists"].first(4)
+    render json: related.as_json
   end
 
 end

@@ -186,6 +186,10 @@ h4 {
 .container-small {
   padding-top: 10px;
 }
+.container-sets {
+  padding: 20px 120px;
+  background-color: #999999;
+}
 .container-timeline {
   padding-top: 50px;
 }
@@ -198,7 +202,10 @@ h4 {
   margin-bottom: 15px;
   width: 60%;
   height: 60%;
-  opacity: 0.7;
+  opacity: 75;
+}
+.similar-artist:hover {
+  transform: scale(1.5);
 }
 .list-group-item:hover {
   border-color: orange;

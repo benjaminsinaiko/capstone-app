@@ -276,15 +276,27 @@
       </div>
     </div>
     
+    <!-- ARTIST BIO -->
     <div class="bg-1">
       <div class="container">
-        <p><b>{{ artistInfo.bio }}</b></p>
+        <p style="font-size: 18px;"><b>{{ artistInfo.bio }}</b></p>
+      </div>
+    </div>
+    
+    <!-- SIMILAR ARTISTS -->
+    <div class="container-md text-center">
+      <h3>SIMILAR ARTISTS</h3>
+      <div class="row">
+        <div class="col-sm-3" v-for="similarArtist in similarArtists">
+          <h3><strong>{{ similarArtist.name }}</strong></h3><br>
+          <a v-bind:href="'/#/artists/' + similarArtist.artistSlug" v-on:click="refresh()"><img :src="similarArtist.images[1].url" class="img-circle person similar-artist" alt="Artist"></a>
+        </div>
       </div>
     </div>
 
     <!-- SETLIST INFO -->
     <div class="">
-      <div class="container">
+      <div class="container-sets">
         <h3 class="text-center">Past Dates</h3>
         <ul class="list-group">
           <!-- PREVIOUS SETS -->
