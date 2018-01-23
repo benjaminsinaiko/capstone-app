@@ -101,13 +101,17 @@ body {
 .btn-save {
   background-image: url("heart.jpg");
 }
+#future-venue-name {
+  margin-top: 15px;
+  font-size: 22px;
+}
 /* Parallax */
 .parallax {
   /* The image used */
   background-image: url("BottomLounge_blur_bw.jpg");
   /*filter: grayscale(90%);*/ /* blur(4px) make all photos black and white */
   /* Full height */
-  height: 700px;
+  height: 810px;
   margin-top: 50px;
   /* Create the parallax scrolling effect */
   background-attachment: fixed;

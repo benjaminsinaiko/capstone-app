@@ -43,7 +43,7 @@ var HomePage = {
       /////// MAP ///////
       var map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 41.892187, lng: -87.647681 },
-        zoom: 14,
+        zoom: 13,
         styles: [
           {
             featureType: "administrative",
@@ -463,7 +463,8 @@ var ProfilePage = {
       visits: [],
       show: false,
       currentPastEvent: [],
-      currentSetlist: []
+      currentSetlist: [],
+      futureDate: ""
     };
   },
   created: function() {
@@ -497,7 +498,7 @@ var ProfilePage = {
           this.futureEvents.push(this.savedEvents[j]);
         }
 
-        // LAST FM IMAGES
+        // LAST FM IMAGES / SET DATE FORMAT
         for (let i = 0; i < this.futureEvents.length; i++) {
           let artistSearch = this.futureEvents[i].artist_name.toLowerCase();
           axios.get("/v1/lastfm/" + artistSearch).then(response => {
@@ -516,6 +517,9 @@ var ProfilePage = {
                 .toLowerCase()
             );
           });
+          this.futureEvents[i].dateFormat = moment(
+            this.futureEvents[i].event_date
+          ).format("MMM Do, YYYY");
         }
       }
       // UNIQUE VENUE VISITS
@@ -524,7 +528,6 @@ var ProfilePage = {
 
       // SET CURRENT PAST EVENT
       this.currentPastEvent = this.pastEvents[0];
-      console.log("currentPastEvent: ", this.currentPastEvent);
 
       // GET SETILIST FOR PAST SHOW
       this.getSetlist();
@@ -719,6 +722,7 @@ var app = new Vue({
     submit: function() {
       let artistSlug = this.artistInput.replace(/\s+/g, "-").toLowerCase();
       router.push("/artists/" + artistSlug);
+      location.reload();
     }
   }
 });
