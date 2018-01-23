@@ -40,6 +40,10 @@ body {
 #profile-divider {
   border-color: orange;
 }
+#show-divider {
+  border-color: #d3d3d3;
+  width: 75%;
+}
 .column-events {
   float: left;
   width: 50%;
@@ -177,7 +181,7 @@ h4 {
   padding: 60px 120px;
 }
 .container-md {
-  padding: 40px 60px;
+  padding: 20px 60px 50px;
 }
 .container-small {
   padding-top: 10px;
@@ -696,12 +700,13 @@ ul.twPc-Arrange {
   cursor: pointer;
 }
 
+/*INFO CARD / FLIP*/
+
 .info-card {
   /*  float: left;
   margin: 10px;
   -webkit-perspective: 600px;*/
 }
-
 .front,
 .back {
   background: #fff;
@@ -711,7 +716,6 @@ ul.twPc-Arrange {
   -webkit-backface-visibility: hidden;
   border: 1px solid black;
 }
-
 .front {
   overflow: hidden;
   width: 240px;
@@ -719,24 +723,19 @@ ul.twPc-Arrange {
   position: absolute;
   z-index: 1;
 }
-
 .back {
   padding: 20px;
   padding-top: 0px;
   width: 240px;
   height: 240px;
   -webkit-transform: rotateY(-180deg);
-  overflow: scroll;
 }
-
 .info-card:hover .back {
   -webkit-transform: rotateY(0);
 }
-
 .info-card:hover .front {
   -webkit-transform: rotateY(180deg);
 }
-
 .card-image {
   width: 100%;
   height: 100%;

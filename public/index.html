@@ -223,12 +223,29 @@
                 <div class="social">
                   <ul>
                     <li style="width:33%;">
-                      <button class="btn-saved" v-on:click="saveEvent(event)"><span class="glyphicon glyphicon-heart"></span></button>
+                      <button class="btn-saved" v-on:click="saveEvent(event)" data-toggle="modal" data-target="#eventSaved"><span class="glyphicon glyphicon-heart"></span></button>
                     </li>
                   </ul>
                 </div>
               </li>
             </ul>
+
+            <!-- EVENT SAVED MODAL -->
+            <div class="modal fade" id="eventSaved" role="dialog">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Event Saved</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p><strong>Find saved events in Profile</strong></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
         </div>
@@ -261,7 +278,7 @@
     
     <div class="bg-1">
       <div class="container">
-        <p>{{ artistInfo.bio }}</p>
+        <p><b>{{ artistInfo.bio }}</b></p>
       </div>
     </div>
 
@@ -338,6 +355,7 @@
         <!-- UPCOMIONG EVENTS -->
         <div class="row text-center">
           <h2>Upcoming Shows</h2>
+          <hr id="show-divider">
           <div class="col-sm-4" v-for="futureEvent in futureEvents">
             <div class="profile-events">
               <h2>{{ futureEvent.artist_name }}</h2>
@@ -352,7 +370,9 @@
     </div>
 
     <div class="container-md bg-1">
-                <h3 class="text-center">Past Shows</h3>
+      <h3 class="text-center">Past Shows</h3>
+      <hr id="show-divider">
+      <br>
       <div class="row-events">
         <!-- PAST INFO -->
         <div class="column-events">
@@ -365,14 +385,10 @@
               <li class="bg-menu clickable"><a class="link-unstyled" v-on:click="setCurrentPastEvent(pastEvent)"><p>{{pastEvent.artist_name}}</p></a>
               </li>
             </ul>
-            
           </div>
         </div>
       </div>
     </div> 
-
-
-
   </div>
 </template>
 
