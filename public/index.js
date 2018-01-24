@@ -171,6 +171,12 @@ var HomePage = {
           infowindow.open(map, this);
         });
       }
+      var markerLocation = new google.maps.Marker({
+        position: { lat: 41.892376, lng: -87.634808 },
+        map: map,
+        // animation: google.maps.Animation.BOUNCE,
+        icon: pinSymbol("red")
+      });
     });
   },
   methods: {
