@@ -60,7 +60,7 @@ body {
   text-decoration: none;
 }
 .setlist-item {
-  margin: 10px;
+  margin: 10px 250px;
   padding: 20px 15px;
   border-width: 3px;
 }
@@ -480,6 +480,9 @@ textarea {
   font-weight: 700;
   margin: 12px 0 12px 0;
   color: darkslategray;
+}
+.row {
+  text-align: center;
 }
 .event-list > li > .info > .desc {
   font-size: 13pt;

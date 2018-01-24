@@ -433,6 +433,7 @@ var ArtistInfoPage = {
         this.upcomingEvent.day = moment(dateDay).format("D");
         let dateMonth = event.datetime_local;
         this.upcomingEvent.month = moment(dateMonth).format("MMM");
+        console.log(this.upcomingEvent);
       });
 
     // SEARCH ARTIST ON SPOTIFY
