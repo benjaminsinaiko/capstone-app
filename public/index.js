@@ -194,7 +194,7 @@ var VenuesPage = {
     };
   },
   created: function() {
-    //Scrolls to top when view is displayed
+    //SCROLLS TO TOP WHEN VIEW IS DISPLAYED
     window.scrollTo(0, 0);
   },
   mounted: function() {
@@ -227,7 +227,7 @@ var VenuesEventPage = {
     };
   },
   created: function() {
-    //Scrolls to top when view is displayed
+    //SCROLLS TO TOP WHEN VIEW IS DISPLAYED
     window.scrollTo(0, 0);
 
     this.capacity = this.$route.query.cap;
@@ -396,7 +396,7 @@ var ArtistInfoPage = {
     };
   },
   created: function() {
-    //Scrolls to top when view is displayed
+    //SCROLLS TO TOP WHEN VIEW IS DISPLAYED
     window.scrollTo(0, 0);
   },
   mounted: function() {
@@ -498,7 +498,7 @@ var ProfilePage = {
     };
   },
   created: function() {
-    //Scrolls to top when view is displayed
+    //SCROLLS TO TOP WHEN VIEW IS DISPLAYED
     window.scrollTo(0, 0);
   },
   mounted: function() {
@@ -514,7 +514,7 @@ var ProfilePage = {
       var d = a.getDate();
       var y = a.getFullYear();
       var date = new Date(y, m, d);
-      // SORTY EVENTS BY PAST / PRESENT
+      // SORT EVENTS BY PAST / PRESENT
       for (let j = 0; j < this.savedEvents.length; j++) {
         var dateString = this.savedEvents[j].event_date.replace(/\-/g, "");
         var year = dateString.substring(0, 4);

@@ -134,8 +134,8 @@
       <div class="row text-center">
         <!-- SAMPLE VENUE CARD -->
         <div class="col-sm-4 info-card" v-for="venue in venues" v-if="isValidVenue(venue)">
-          <div class="thumbnail front">
-            <img v-bind:src="venue.avatar" alt="venue image">
+          <div class="thumbnail front" class="venue-avatar">
+            <img class="venue-avatar" v-bind:src="venue.avatar" alt="venue image">
             <!-- <p style="font-size: 20px;">{{ venue.venue_name }}</p> -->
           </div>
           <div class="thumbnail back">

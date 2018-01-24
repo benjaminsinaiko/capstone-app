@@ -262,11 +262,15 @@ h4 {
   box-shadow: 0 !important;
   border: 0 !important;
   border-radius: 0;
+  margin-left: 50px;
 }
 .thumbnail p {
   padding-top: 30px;
   margin-top: 15px;
   color: #555;
+}
+.venue-avatar {
+  text-align: center;
 }
 .btn {
   padding: 10px 20px;
