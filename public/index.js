@@ -404,6 +404,14 @@ var ArtistInfoPage = {
     axios.get("/v1/setlists/artist/" + this.$route.params.id).then(response => {
       this.setlists = response.data.setlist;
       this.artistName = this.setlists[0].artist.name;
+      // FORMAT DATE
+      for (let i = 0; i < this.setlists.length; i++) {
+        this.setlists[i].dateFormat = moment(
+          this.setlists[i].eventDate,
+          "DD-MM-YYYY"
+        ).format("MMM Do, YYYY");
+      }
+      console.log("setlists: ", this.setlists);
     });
 
     // GET SPOTIFY TOKEN FROM LOCALSTORAGE
