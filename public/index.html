@@ -243,7 +243,7 @@
 <template id="artist-info-page">
   <div>
     <!-- ARTIST NAME/IMAGE -->
-    <div class="container text-center artist-top">
+    <div class="container-artist text-center artist-top">
       <div class="row">
         <div class="col-sm-6">
           <h1 class="animated bounceIn"><strong>{{ artistName }}</strong></h1>
@@ -257,10 +257,39 @@
         </div>
       </div>
     </div>
+
+    <!-- UPCOMING SHOWS -->
+    <div class="container" v-if="upcomingEvent.length > 0">
+        <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ] event">
+          <h3>Upcoming</h3>
+            <!-- EVENT LIST TEMPLATE -->
+            <ul class="event-list">
+              <li>
+                <time>
+                  <span class="day" count>{{upcomingEvent.day}}</span>
+                  <span class="month">{{upcomingEvent.month}}</span>
+                </time>
+                <div class="info">
+                  <h1 class="title">{{ upcomingEvent[0].title }}</h1>
+                  <p class="desc">{{upcomingEvent[0].venue.name}}</p>
+                  <p class="desc">{{upcomingEvent[0].venue.display_location}}</p>
+                </div>
+                <div class="social">
+                  <ul>
+                    <li style="width:33%;">
+                      <button class="btn-saved"><span class="glyphicon glyphicon-heart"></span></button>
+                    </li>
+                  </ul>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+    </div>
     
     <!-- ARTIST BIO -->
     <div class="bg-1">
-      <div class="container">
+      <div class="container-md">
         <p style="font-size: 18px;"><b>{{ artistInfo.bio }}</b></p>
       </div>
     </div>
@@ -270,7 +299,7 @@
       <h3>SIMILAR ARTISTS</h3>
       <div class="row">
         <div class="col-sm-3" v-for="similarArtist in similarArtists">
-          <h3><strong>{{ similarArtist.name }}</strong></h3><br>
+          <h5 style="font-size: 20px;"><strong>{{ similarArtist.name }}</strong></h5><br>
           <a v-bind:href="'/#/artists/' + similarArtist.artistSlug" v-on:click="refresh()"><img :src="similarArtist.images[1].url" class="img-circle person similar-artist" alt="Artist"></a>
         </div>
       </div>
@@ -320,7 +349,7 @@
         <button id="singlebutton" name="singlebutton" class="btn btn-primary center-block" type="button" data-toggle="modal" data-target="#exampleModal" v-on:click="show = !show">Year in Review</button>
       </div>  
     </div>
-    <div class="container-artist bg-1">
+    <div class="container-artist bg-2">
       <h2>Benjamin Sinaiko</h2>
       <hr id="profile-divider">
       <div class="row">

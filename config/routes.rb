@@ -11,8 +11,9 @@ Rails.application.routes.draw do
 
     get '/seatgeek/events' => 'sg_events#events'
     get '/seatgeek/events/:id' => 'sg_events#show'
-    get '/seatgeek/performers' => 'sg_events#performers'
-    get '/seatgeek/venues' => 'sg_events#venues'
+    get '/seatgeek/upcoming' => 'sg_events#upcoming'
+    # get '/seatgeek/performers' => 'sg_events#performers'
+    # get '/seatgeek/venues' => 'sg_events#venues'
 
     get '/parse/venues' => 'parse_events#venues'
 

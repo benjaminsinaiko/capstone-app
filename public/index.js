@@ -390,6 +390,7 @@ var ArtistInfoPage = {
       currentSetlist: {},
       currentURL: [],
       artistInfo: [],
+      upcomingEvent: {},
       similarArtists: [],
       artistImage: {},
       artistPlaylist: ""
@@ -400,9 +401,12 @@ var ArtistInfoPage = {
     window.scrollTo(0, 0);
   },
   mounted: function() {
+    let upcomingArtist = this.$route.params.id;
     // GET SETLIST
-    axios.get("/v1/setlists/artist/" + this.$route.params.id).then(response => {
-      this.setlists = response.data.setlist;
+    axios.get("/v1/setlists/artist/" + upcomingArtist).then(response => {
+      this.setlists = response.data.setlist.slice(0, 10);
+      console.log("setlists Original: ", this.setlists);
+
       this.artistName = this.setlists[0].artist.name;
       // FORMAT DATE
       for (let i = 0; i < this.setlists.length; i++) {
@@ -422,6 +426,20 @@ var ArtistInfoPage = {
       this.$route.params.id +
       "&access_token=" +
       token;
+
+    // GET UPCOMING SHOW
+    axios
+      .get("/v1/seatgeek/upcoming?artist=" + upcomingArtist)
+      .then(response => {
+        this.upcomingEvent = response.data;
+        console.log("upcoming: ", this.upcomingEvent);
+        console.log("upcomingLength: ", this.upcomingEvent.length);
+
+        let dateDay = this.upcomingEvent.datetime_local;
+        this.upcomingEvent.day = moment(dateDay).format("D");
+        let dateMonth = event.datetime_local;
+        this.upcomingEvent.month = moment(dateMonth).format("MMM");
+      });
 
     // SEARCH ARTIST ON SPOTIFY
     axios.get(searchUrl).then(response => {
@@ -476,6 +494,8 @@ var ArtistInfoPage = {
     },
     refresh: function() {
       location.reload();
+      //SCROLLS TO TOP WHEN VIEW IS DISPLAYED
+      window.scrollTo(0, 0);
     }
   },
   computed: {}

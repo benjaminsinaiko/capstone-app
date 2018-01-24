@@ -177,13 +177,20 @@ h4 {
   color: #111;
 }
 .container {
-  padding: 80px 120px;
+  padding: 30px 120px;
 }
 .container-artist {
-  padding: 60px 120px;
+  padding: 50px 120px;
+  margin-top: 50px;
+}
+.container-upcoming {
+  padding: 80px 120px;
 }
 .container-md {
-  padding: 20px 60px 50px;
+  padding: 30px 60px 30px;
+}
+.container-md h1 {
+  margin-top: 0px;
 }
 .container-small {
   padding-top: 10px;
@@ -196,7 +203,7 @@ h4 {
   padding: 30px 120px;
   background-color: #f2f2f2;
 }
-.container-venue-search h1 {
+.container-venue-search {
   margin-top: 0px;
   color: white;
 }
@@ -247,6 +254,13 @@ h4 {
 }
 .bg-1 p {
   font-style: italic;
+}
+.bg-2 {
+  background: #2d2d30;
+  color: #bdbdbd;
+  margin-top: 50px;
+  padding: 60px;
+  width: 100%;
 }
 .list-group-item {
 }
@@ -434,13 +448,13 @@ textarea {
 .event-list > li > .info > .title {
   font-size: 17pt;
   font-weight: 700;
-  margin: 12px 0 0 0;
+  margin: 12px 0 12px 0;
   color: darkslategray;
 }
 .event-list > li > .info > .desc {
   font-size: 13pt;
   font-weight: 300;
-  margin: 10px 0 0 0;
+  margin: 0px 0 0 0;
   color: darkslategray;
 }
 .event-list > li > .info > ul,

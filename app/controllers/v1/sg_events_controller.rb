@@ -12,16 +12,22 @@ class V1::SgEventsController < ApplicationController
     render json: venue_events.as_json
   end
 
-  def performers
-    response = Unirest.get("https://api.seatgeek.com/2/performers?client_id=#{ENV['SG_CLIENT_ID']}&id=#{params[:performer_id]}")
-    performer_info = response.body
-    render json: performer_info.as_json
+  def upcoming
+    response = Unirest.get("https://api.seatgeek.com/2/events?client_id=#{ENV['SG_CLIENT_ID']}&venue.city=chicago&performers.slug=#{params[:artist]}")
+    upcoming_event = response.body["events"]
+    render json: upcoming_event.as_json
   end
 
-  def venues
-    params = "999,3320,981,9520,7801,54901,11700,1365,74432,515,403,1520,557,1029,622,3660,2088,60271,5501,372,136"
-    response = Unirest.get("https://api.seatgeek.com/2/venues?client_id=#{ENV['SG_CLIENT_ID']}&per_page=200&id=#{params}")
-    venue_events = response.body
-    render json: venue_events.as_json
-  end
+  # def performers
+  #   response = Unirest.get("https://api.seatgeek.com/2/performers?client_id=#{ENV['SG_CLIENT_ID']}&id=#{params[:performer_id]}")
+  #   performer_info = response.body
+  #   render json: performer_info.as_json
+  # end
+
+  # def venues
+  #   params = "999,3320,981,9520,7801,54901,11700,1365,74432,515,403,1520,557,1029,622,3660,2088,60271,5501,372,136"
+  #   response = Unirest.get("https://api.seatgeek.com/2/venues?client_id=#{ENV['SG_CLIENT_ID']}&per_page=200&id=#{params}")
+  #   venue_events = response.body
+  #   render json: venue_events.as_json
+  # end
 end
