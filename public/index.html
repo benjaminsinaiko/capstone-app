@@ -23,6 +23,7 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="http://momentjs.com/downloads/moment.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="https://cdn.klokantech.com/maptilerlayer/v1/index.js"></script>
   <script src="http://momentjs.com/downloads/moment.min.js"></script>
   <script src="index.js" defer></script>
 </head>
@@ -100,8 +101,9 @@
         <h1 class="logo animated infinite pulse" id="header-parallax">GoSee</h1>
       </hgroup>
     </div>
+
     <div class="container-small">
-      <h3 class="text-center">Venues around Town</h3>
+      <h3 class="text-center">Venues Around Town</h3>
     </div>
 
     <!-- GOOGLE MAP -->
@@ -126,7 +128,7 @@
       <div class="container-md">
         <h3 class="text-center">
           <h1 style="text-align: center;">Find a Venue</h1>
-          <input type="text" class="form-control" v-model="venueFilter" placeholder="Search for venue" aria-label="Search for venue">
+          <input type="text" class="form-control" v-model="venueFilter" placeholder="Search for venue" aria-label="Search">
         </h3>
       </div>
     </div>
@@ -199,7 +201,9 @@
                   <h1 class="title">{{event.title}}</h1>
                   <p class="desc">{{dateTime(event)}}</p>
                   <ul>
-                    <li><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
+                    <li style="width:33%;"></li>
+                    <li id="artist-info"><a v-bind:href="'/#/artists/' + event.performers[0].slug" class="">Artist Info</a></li>
+                    <li style="width:33%;"></li>
                   </ul>
                 </div>
                 <div class="social">
@@ -289,13 +293,13 @@
     
     <!-- ARTIST BIO -->
     <div class="bg-1">
-      <div class="container-md">
+      <div class="container-bio">
         <p style="font-size: 18px;"><b>{{ artistInfo.bio }}</b></p>
       </div>
     </div>
     
     <!-- SIMILAR ARTISTS -->
-    <div class="container-md text-center">
+    <div class="container-md-no-box text-center">
       <h3>SIMILAR ARTISTS</h3>
       <div class="row">
         <div class="col-sm-3" v-for="similarArtist in similarArtists">
@@ -307,7 +311,7 @@
 
     <!-- SETLIST INFO -->
     <div class="">
-      <div class="container-sets">
+      <div class="container-sets bg-1">
         <h3 class="text-center">Past Dates</h3>
         <ul class="list-group">
           <!-- PREVIOUS SETS -->
@@ -358,13 +362,13 @@
         </div>
         <div class="col-sm-4">
           <h2>Shows Attended</h2>
-          <div class="container-small">
+          <div class="container-small-no-box">
             <h5 class="profile-count">{{attendedCount}}</h5>
           </div>
         </div>
         <div class="col-sm-4">
           <h2>Venues Visited</h2>
-          <div class="container-small">
+          <div class="container-small-no-box">
             <h5 class="profile-count">{{visitedCount}}</h5>
           </div>
         </div>
@@ -373,7 +377,7 @@
     </div>
     
     <!-- FUTURE / PAST EVENTS -->
-    <div class="container-md">
+    <div class="container-md-no-box">
       <div class="row-events">
         <!-- UPCOMIONG EVENTS -->
         <div class="row text-center">
@@ -392,8 +396,8 @@
       </div>
     </div>
 
-    <div class="container-md bg-1">
-      <h3 class="text-center">Past Shows</h3>
+    <div class="bg-1 container-past-shows" style="min-height: 820px;">
+      <h2 class="text-center">Past Shows</h2>
       <hr id="show-divider">
       <br>
       <div class="row-events">
@@ -474,7 +478,7 @@
 <!-- Spotify Auth -->
 <template id="spotify-auth-page">
   <div>
-    <div class="container">
+    <div class="container-upcoming">
       <h1>{{ message }}</h1>
       <button class="btn btn-primary btn-lg" v-on:click="spotifyConnect()">Spotify Auth</button>
     </div>

@@ -42,7 +42,7 @@ var HomePage = {
 
       /////// MAP ///////
       var map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 41.892187, lng: -87.647681 },
+        center: { lat: 41.892376, lng: -87.634808 },
         zoom: 13,
         styles: [
           {
@@ -240,8 +240,6 @@ var VenuesEventPage = {
         this.venueName = eventsData[0].venue.name;
         this.venueAddress = eventsData[0].venue.address;
         console.log("Events: ", this.events);
-        console.log("capacity: ", this.capacity);
-        console.log("ages: ", this.ages);
 
         let coords = this.events[0].venue.location;
         let myLatLng = { lat: coords.lat, lng: coords.lon };
@@ -405,7 +403,6 @@ var ArtistInfoPage = {
     // GET SETLIST
     axios.get("/v1/setlists/artist/" + upcomingArtist).then(response => {
       this.setlists = response.data.setlist.slice(0, 10);
-      console.log("setlists Original: ", this.setlists);
 
       this.artistName = this.setlists[0].artist.name;
       // FORMAT DATE
@@ -432,9 +429,6 @@ var ArtistInfoPage = {
       .get("/v1/seatgeek/upcoming?artist=" + upcomingArtist)
       .then(response => {
         this.upcomingEvent = response.data;
-        console.log("upcoming: ", this.upcomingEvent);
-        console.log("upcomingLength: ", this.upcomingEvent.length);
-
         let dateDay = this.upcomingEvent.datetime_local;
         this.upcomingEvent.day = moment(dateDay).format("D");
         let dateMonth = event.datetime_local;
@@ -452,7 +446,6 @@ var ArtistInfoPage = {
         "https://open.spotify.com/embed?theme=white&uri=" + artistURI;
 
       // GET RELATED ARTISTS
-      console.log(this.artistInfo.id);
       let relatedUrl =
         "/v1/spotify/related?artistId=" +
         this.artistInfo.id +
@@ -470,7 +463,6 @@ var ArtistInfoPage = {
               .toLowerCase()
           );
         }
-        console.log("similarArtists: ", this.similarArtists);
       });
     });
 
