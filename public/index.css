@@ -826,3 +826,7 @@ ul.twPc-Arrange {
   width: 100%;
   height: 100%;
 }
+.saved-glyph {
+  background-color: #ff4d4d;
+  color: #000;
+}

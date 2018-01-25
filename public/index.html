@@ -55,9 +55,7 @@
                 <div class="navbar-form navbar-left">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" v-model="artistInput">
-
-                      <button class="btn-search" type="submit" v-on:click="submit()">go</button>
-
+                    <button class="btn-search" type="submit" v-on:click="submit()">go</button>
                   </div>
                 </div>
               </ul>
@@ -138,11 +136,10 @@
     </div>
     <div class="container-venue-search">
       <div class="row text-center">
-        <!-- SAMPLE VENUE CARD -->
+        <!-- VENUE CARD -->
         <div class="col-sm-4 info-card" v-for="venue in venues" v-if="isValidVenue(venue)">
           <div class="thumbnail front" class="venue-avatar">
             <img class="venue-avatar" v-bind:src="venue.avatar" alt="venue image">
-            <!-- <p style="font-size: 20px;">{{ venue.venue_name }}</p> -->
           </div>
           <div class="thumbnail back">
             <p style="font-size: 20px;">{{ venue.venue_name }}</p>
@@ -162,7 +159,7 @@
 <template id="venues-event-page">
   <div>
 
-  <!-- MAP -->
+  <!-- VENUE MAP -->
     <div id="map-venue"></div>
 
   <!-- VENUE HEADER -->
@@ -172,7 +169,6 @@
       <br>
       <div class="row">
         <div class="col-sm-4">
-
           <p><strong>Capacity</strong></p>
           <p class="venue-info">{{capacity}}</p>
         </div>
@@ -213,13 +209,15 @@
                 <div class="social">
                   <ul>
                     <li style="width:33%;">
-                      <button class="btn-saved" v-on:click="saveEvent(event)" data-toggle="modal" data-target="#eventSaved"><span class="glyphicon glyphicon-heart"></span></button>
+                      <button v-bind:class="['btn-saved', {'saved-glyph' : event.favorited} ]" class="btn-saved" v-on:click="saveEvent(event)" data-toggle="modal" data-target="#eventSaved">
+                        <!-- <span v-bind:class="['glyphicon', {'glyphicon-heart': !event.favorited, 'glyphicon-star': event.favorited}]"></span> -->
+                        <span class="glyphicon glyphicon-heart"></span>
+                      </button>
                     </li>
                   </ul>
                 </div>
               </li>
             </ul>
-
             <!-- EVENT SAVED MODAL -->
             <div class="modal fade" id="eventSaved" role="dialog">
               <div class="modal-dialog modal-sm">
@@ -236,7 +234,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -289,7 +286,6 @@
                     </li>
                   </ul>
                 </div>
-
               </li>
             </ul>
           </div>
@@ -452,7 +448,6 @@
     <button class="btn btn-primary" v-on:click="submit()">Submit</button>
     Or
     <a href="/#/login">Login</a>
-    <!-- <button class="btn btn-primary" v-on:click="submit()">Login</button> -->
   </div>
 </template>
 

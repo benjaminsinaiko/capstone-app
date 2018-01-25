@@ -229,7 +229,8 @@ var VenuesEventPage = {
       venueAddress: "",
       events: [],
       capacity: "",
-      ages: ""
+      ages: "",
+      savedEventTitles: []
     };
   },
   created: function() {
@@ -241,12 +242,32 @@ var VenuesEventPage = {
 
     axios.get("v1/seatgeek/events/" + this.$route.params.id).then(
       function(response) {
-        var eventsData = response.data.events;
+        let eventsData = response.data.events;
+        eventsData.forEach(function(eventData) {
+          eventData.favorited = false;
+        });
         this.events = eventsData;
         this.venueName = eventsData[0].venue.name;
         this.venueAddress = eventsData[0].venue.address;
         console.log("Events: ", this.events);
 
+        axios.get("v1//saved-events").then(function(response) {
+          let savedEvents = response.data;
+          this.savedEventTitles = savedEvents.map(event => event.event_name);
+          console.log("Saved: ", savedEvents);
+          console.log("SavedTitle: ", this.savedEventTitles);
+
+          eventsData.forEach(
+            function(eventData) {
+              if (this.savedEventTitles.indexOf(eventData.title) > -1) {
+                console.log("yes", eventData.title);
+                eventData.favorited = true;
+              }
+            }.bind(this)
+          );
+        });
+
+        // SET MAP
         let coords = this.events[0].venue.location;
         let myLatLng = { lat: coords.lat, lng: coords.lon };
         let latLng = new google.maps.LatLng(coords.lat, coords.lon);
@@ -393,7 +414,7 @@ var ArtistInfoPage = {
       artistName: "",
       currentSetlist: {},
       currentURL: [],
-      artistInfo: [],
+      artistInfo: {},
       upcomingEvent: {},
       similarArtists: [],
       artistImage: {},
@@ -604,7 +625,6 @@ var ProfilePage = {
           "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
           setId;
         console.log("currentSetlist: ", this.currentSetlist);
-        console.log("ID: ", setId);
       });
     },
     setCurrentPastEvent: function(pastEvent) {
