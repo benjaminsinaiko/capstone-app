@@ -20,7 +20,6 @@ var HomePage = {
       spotifyCode = spotifyCode.split("#")[0];
       console.log("spotifyCode", spotifyCode);
       let url = "http://localhost:3000/v1/spotify/tokens?code=" + spotifyCode;
-      console.log("url: ", url);
 
       axios.get(url).then(response => {
         let token = response.data;
@@ -28,10 +27,9 @@ var HomePage = {
         let refreshToken = response.data.refresh_token;
         localStorage.setItem("spotifyToken", response.data.access_token);
         localStorage.setItem("spotifyRefresh", response.data.refresh_token);
-        console.log("return token: ", token);
         console.log("access token: ", accessToken);
         console.log("refresh token: ", refreshToken);
-        router.push("/profile");
+        router.push("/#/");
       });
     }
   },
@@ -227,7 +225,7 @@ var VenuesEventPage = {
       message: "Venues Event Page",
       venueName: "",
       venueAddress: "",
-      events: [],
+      events: {},
       capacity: "",
       ages: "",
       savedEventTitles: []
@@ -254,13 +252,10 @@ var VenuesEventPage = {
         axios.get("v1//saved-events").then(function(response) {
           let savedEvents = response.data;
           this.savedEventTitles = savedEvents.map(event => event.event_name);
-          console.log("Saved: ", savedEvents);
-          console.log("SavedTitle: ", this.savedEventTitles);
 
           eventsData.forEach(
             function(eventData) {
               if (this.savedEventTitles.indexOf(eventData.title) > -1) {
-                console.log("yes", eventData.title);
                 eventData.favorited = true;
               }
             }.bind(this)
@@ -444,7 +439,6 @@ var ArtistInfoPage = {
 
     // GET SPOTIFY TOKEN FROM LOCALSTORAGE
     let token = localStorage.getItem("spotifyToken");
-    // console.log("spotifyToken is:", token);
     let searchUrl =
       "/v1/spotify/search?artist=" +
       this.$route.params.id +
@@ -500,7 +494,6 @@ var ArtistInfoPage = {
       let lastFm = response.data;
       Vue.set(this.artistInfo, "bio", lastFm.artist.bio.summary.split("<")[0]);
       Vue.set(this.artistInfo, "lastImage", lastFm.artist.image[2]["#text"]);
-      console.log("ArtistInfo: ", this.artistInfo);
     });
   },
 
@@ -624,12 +617,10 @@ var ProfilePage = {
         this.currentSetlist =
           "https://www.setlist.fm/widgets/setlist-image-v1?font=1&size=large&fg=ffffff&border=ffa500&bg=878787&id=" +
           setId;
-        console.log("currentSetlist: ", this.currentSetlist);
       });
     },
     setCurrentPastEvent: function(pastEvent) {
       this.currentPastEvent = pastEvent;
-      console.log("currentPastEvent: ", this.currentPastEvent);
       this.getSetlist();
     }
   },
@@ -748,7 +739,6 @@ var SpotifyCallbackPage = {
     axios.get(url).then(function(response) {
       this.profileData = response.data;
       this.displayName = response.data.display_name;
-      console.log("profileData: ", this.profileData);
     });
   },
   methods: {},
