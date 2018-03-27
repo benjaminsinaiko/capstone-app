@@ -390,6 +390,9 @@ var VenuesEventPage = {
         // Do something after saving
         console.log(params);
       });
+    },
+    refresh: function() {
+      location.reload();
     }
   },
   computed: {
@@ -450,11 +453,11 @@ var ArtistInfoPage = {
       .get("/v1/seatgeek/upcoming?artist=" + upcomingArtist)
       .then(response => {
         this.upcomingEvent = response.data;
-        let dateDay = this.upcomingEvent.datetime_local;
+        console.log("upcoming", this.upcomingEvent);
+        let dateDay = this.upcomingEvent[0].datetime_local;
         this.upcomingEvent.day = moment(dateDay).format("D");
-        let dateMonth = event.datetime_local;
+        let dateMonth = this.upcomingEvent[0].datetime_local;
         this.upcomingEvent.month = moment(dateMonth).format("MMM");
-        console.log(this.upcomingEvent);
       });
 
     // SEARCH ARTIST ON SPOTIFY

@@ -228,7 +228,7 @@
                     <p><strong>Find saved events in Profile</strong></p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="refresh()">Close</button>
                   </div>
                 </div>
               </div>
@@ -257,7 +257,7 @@
         <div class="col-sm-6">
           <!-- SPOTIFY PLAYER -->
           <br>
-          <iframe :src="artistPlaylist" width="450" height="400" frameborder="0" allowtransparency="true"></iframe>
+          <iframe style="margin-top: 90px;" :src="artistPlaylist" width="450" height="400" frameborder="0" allowtransparency="true"></iframe>
         </div>
       </div>
     </div>
